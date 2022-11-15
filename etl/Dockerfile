@@ -1,4 +1,4 @@
-FROM alpine:3.16
+FROM alpine:node18-3.16
 
 WORKDIR /usr/local/src/etl
 ADD . /usr/local/src/etl
