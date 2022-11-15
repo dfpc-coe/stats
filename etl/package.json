@@ -1,5 +1,5 @@
 {
-    "name": "@tak-ps/stats#etl",
+    "name": "@tak-ps/stats.etl",
     "private": true,
     "type": "module",
     "version": "1.0.0",

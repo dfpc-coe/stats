@@ -1,183 +1,143 @@
 <template>
-    <div id="app" class='hmin-full flex flex--center-main pb60 custom-bg-dark'>
-        <div class='flex-child wmax600 col col--12'>
-            <div class='py36 col col--12 grid'>
-                <div class='col col--4'></div>
-                <div class='col col--4'>
-                    <h1 @click='$router.push({ path: "/" })' class='align-center txt-h3 cursor-default txt-underline-on-hover cursor-pointer color-white'>Raster Uploader</h1>
-                </div>
-                <div v-if='!loading.user && $route.path !== "/login"' class='col col--4'>
-                    <button v-if='user.username' @click='$router.push({ path: "/profile" })' class='color-white dropdown btn fr mr3 mb3 pb3 round btn--stroke color-blue-on-hover'>
-                        <svg class='icon inline'><use href='#icon-user'/></svg>
-                        <svg class='icon inline'><use href='#icon-chevron-down'/></svg>
+<div class='page'>
+    <header class='navbar navbar-expand-md navbar-dark d-print-none'>
+        <div class="container-xl">
+            <div class="col">
+                <div class="page-pretitle">TAK Public Safety</div>
+                <h2 class="page-title">Statistics</h2>
+            </div>
+        </div>
+    </header>
 
-                        <div class='round dropdown-content color-black' style='top: 30px; width: 80px; left: -12px;'>
-                            <div @click.stop='external("/docs")' class='w-full bg-gray-light-on-hover round-t'>API Docs</div>
-                            <div @click.stop='$router.push({ path: "/profile" })' class='w-full bg-gray-light-on-hover'>Profile</div>
-                            <div v-if='user.access === "admin"' @click.stop='$router.push({ path: "/admin" })' class='w-full bg-gray-light-on-hover'>Admin</div>
-                            <div @click.stop='getLogout' class='w-full bg-gray-light-on-hover round-b'>Logout</div>
-                        </div>
-                    </button>
-                    <button v-else @click='$router.push({ path: "/login" })' class='btn color-white fr mr6 mb6 pb3 round btn--stroke color-green-on-hover'>
-                        Login
-                    </button>
+    <div class='page-wrapper'>
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">Charts</h2>
+                    </div>
                 </div>
             </div>
-            <template v-if='loading.meta || loading.user'>
-                <Loading desc='Loading Raster Uploader'/>
-            </template>
-            <template v-else-if='meta.security === "authenticated" && !user.username && !$route.path.includes("/login")'>
-                <div class='flex flex--center-main pt36'>
-                    <svg class='flex-child icon w60 h60 color--gray'><use href='#icon-alert'/></svg>
-                </div>
-
-                <div class='flex flex--center-main pt12 pb6'>
-                    <h1 class='flex-child txt-h4 cursor-default align-center'>Access Denied</h1>
-                </div>
-                <div class='flex flex--center-main'>
-                    <h2 class='flex-child txt-h5 cursor-default align-center'>Please Login To Access</h2>
-                </div>
-            </template>
-            <template v-else>
-                <router-view
-                    class='px12 pb12'
-                    :user='user'
-                    :meta='meta'
-                    @err='err = $event'
-                    @auth='refresh($event)'
-                />
-            </template>
         </div>
-
-        <Err
-            v-if='err'
-            :err='err'
-            @close='err = $event'
-        />
     </div>
+
+    <div class='page-body'>
+        <div class='container-xl'>
+            <div class='row row-deck row-cards'>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Sales</div>
+                                <div class="ms-auto lh-1">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item active" href="#">Last 7 days</a>
+                                            <a class="dropdown-item" href="#">Last 30 days</a>
+                                            <a class="dropdown-item" href="#">Last 3 months</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h1 mb-3">75%</div>
+                            <div class="d-flex mb-2">
+                                <div>Conversion rate</div>
+                                <div class="ms-auto">
+                                    <span class="text-green d-inline-flex align-items-center lh-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
+                                    <span class="visually-hidden">75% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <h3 class="card-title">Registered Users</h3>
+                                <div class="ms-auto">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item active" href="#">Last 7 days</a>
+                                            <a class="dropdown-item" href="#">Last 30 days</a>
+                                            <a class="dropdown-item" href="#">Last 3 months</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ApexChart
+                                    type='line'
+                                    height='350'
+                                    :options='{
+                                        chart: {
+                                            id: "total-users",
+                                            zoom: {
+                                                enabled: false
+                                            }
+                                        }
+                                    }'
+                                    :series='[{
+                                      name: "users",
+                                      data: [30, 40, 35, 50, 49, 60, 70, 91]
+                                    }]'
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer footer-transparent d-print-none">
+        <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+                <div class="col-lg-auto ms-lg-auto">
+                    <ul class="list-inline list-inline-dots mb-0">
+                      <li class="list-inline-item"><a href="./docs/" class="link-secondary">Documentation</a></li>
+                      <li class="list-inline-item"><a href="https://github.com/tak-ps/stats" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                    <ul class="list-inline list-inline-dots mb-0">
+                        <li class="list-inline-item">
+                            Copyright © 2023
+                            <a href="." class="link-secondary">TAK Public Safety</a>
+                            - MIT License
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
 </template>
 
 <script>
-import Err from './components/Err.vue';
-import Loading from './components/util/Loading.vue';
+import '@tabler/core/dist/js/tabler.min.js';
+import '@tabler/core/dist/css/tabler.min.css';
+
+import VueApexCharts from 'vue3-apexcharts'
 
 export default {
-    name: 'RasterUploader',
+    name: 'Tak-PS-Stats',
     data: function() {
         return {
             err: false,
-            user: {
-                name: false,
-                access: false
-            },
-            meta: {
-
-            },
-            loading: {
-                user: true,
-                meta: true
-            }
-        }
-    },
-    mounted: function() {
-        this.refresh();
-    },
-    methods: {
-        refresh: async function(token) {
-            if (token) localStorage.token = token;
-
-            this.loading.meta = false; //temp
-            await this.getUser();
-        },
-        external: function(url) {
-            if (!url) return;
-            window.open(url, "_blank")
-        },
-        getLogout: async function() {
-            try {
-                delete localStorage.token;
-                if (this.$router.path !== '/') this.$router.push('/login')
-            } catch (err) {
-                this.err = err;
-            }
-        },
-        getUser: async function() {
-            try {
-                this.loading.user = true;
-                this.user = await window.std('/api/login', {}, false);
-                this.loading.user = false;
-            } catch (err) {
-                this.loading.user = false;
-
-                if (err.message === 'Authentication Required') {
-                    if (this.$route.path.split('/')[1] !== 'login') this.$router.push('/login');
-                }
-                console.error(err);
-            }
         }
     },
     components: {
-        Loading,
-        Err
+        ApexChart: VueApexCharts
     }
 }
 </script>
-
-<style lang="scss">
-
-.custom-bg-dark { background-color: #0c1821; }
-.custom-bg { background-color: #1b2a41; }
-.custom-bg-light { background-color: #324a5f; }
-.custom-color-dark { color: #0c1821; }
-.custom-color { color: #1b2a41; }
-.custom-color-light { color: #324a5f; }
-.custom-border-dark { border-color: #0c1821; }
-.custom-border { border-color: #1b2a41; }
-.custom-border-light { border-color: #324a5f; }
-
-.col--1 { width: 8.3333% !important; }
-.col--2 { width: 16.6666% !important; }
-.col--3 { width: 25% !important; }
-.col--4 { width: 33.3333% !important; }
-.col--5 { width: 41.6666% !important; }
-.col--6 { width: 50% !important; }
-.col--7 { width: 58.3333% !important; }
-.col--8 { width: 66.6666% !important; }
-.col--9 { width: 75% !important; }
-.col--10 { width: 83.3333% !important; }
-.col--11 { width: 91.6666% !important; }
-.col--12 { width: 100% !important; }
-
-@media screen and (min-width: 640px) {
-    .col--1-mm { width: 8.3333% !important; }
-    .col--2-mm { width: 16.6666% !important; }
-    .col--3-mm { width: 25% !important; }
-    .col--4-mm { width: 33.3333% !important; }
-    .col--5-mm { width: 41.6666% !important; }
-    .col--6-mm { width: 50% !important; }
-    .col--7-mm { width: 58.3333% !important; }
-    .col--8-mm { width: 66.6666% !important; }
-    .col--9-mm { width: 75% !important; }
-    .col--10-mm { width: 83.3333% !important; }
-    .col--11-mm { width: 91.6666% !important; }
-    .col--12-mm { width: 100% !important; }
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-</style>
-

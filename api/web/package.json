@@ -1,5 +1,5 @@
 {
-    "name": "@tak-ps/stats#web",
+    "name": "@tak-ps/stats.web",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -18,7 +18,8 @@
         "sass-loader": "^13.0.0",
         "semver-sort": "^1.0.0",
         "vue": "^3.2.31",
-        "vue-router": "^4.0.14"
+        "vue-router": "^4.0.14",
+        "vue3-apexcharts": "^1.4.1"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.17.0",
