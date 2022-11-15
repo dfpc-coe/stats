@@ -68,11 +68,11 @@ export default class Flight {
     }
 
     /**
-     * Make a request using a JSON fixture
+     * Make a fetch using a JSON fixture
      *
      * @param {Tape} test Tape Instance
      * @param {String} name Name of fixture present in the ./fixtures folder (Should be JSON)
-     * @param {String} auth Name of the token that will be used to make the request
+     * @param {String} auth Name of the token that will be used to make the fetch
      */
     fixture(test, name, auth) {
         test(`Fixture: ${name}`, async (t) => {
@@ -82,7 +82,7 @@ export default class Flight {
             };
 
             try {
-                await this.request(req, t);
+                await this.fetch(req, t);
             } catch (err) {
                 t.error(err, 'no errors');
             }
@@ -94,14 +94,14 @@ export default class Flight {
     /**
      * Request data from the API & Ensure the output schema matches the response
      *
-     * @param {String} url URL to request
+     * @param {String} url URL to fetch
      * @param {Object} req Request Object
      * @param {boolean|object} t If true validate schema & use defaults. If false, don't validate schema and use defaults
      * @param {boolean} [t.verify] Verify Schema Validation
      * @param {boolean} [t.json=true] Expect JSON in response
      */
     async fetch(url, req, t) {
-        if (t === undefined) throw new Error('flight.request requires two arguments - pass (<url>, <req>, false) to disable schema testing');
+        if (t === undefined) throw new Error('flight.fetch requires two arguments - pass (<url>, <req>, false) to disable schema testing');
 
         const defs = {
             verify: false,
