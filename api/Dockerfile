@@ -5,12 +5,12 @@ EXPOSE 5000
 ENV HOME=/home/stats
 WORKDIR $HOME
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata \
-    && apt-get install -y nginx curl memcached python3 build-essential
+RUN apt-get update > /dev/null \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata > /dev/null \
+    && apt-get install -y nginx curl memcached python3 build-essential > /dev/null
 
 RUN export NODEV='18.12.1' \
-    && curl "https://nodejs.org/dist/v${NODEV}/node-v${NODEV}-linux-x64.tar.gz" | tar -xzv \
+    && curl "https://nodejs.org/dist/v${NODEV}/node-v${NODEV}-linux-x64.tar.gz" | tar -xzv > /dev/null \
     && cp ./node-v${NODEV}-linux-x64/bin/node /usr/bin/ \
     && ./node-v${NODEV}-linux-x64/bin/npm install -g npm
 
