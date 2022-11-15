@@ -7,18 +7,22 @@ import fs from 'fs';
 const SERVER = process.env.server || 'https://auth.cotak.gov/';
 const USERNAME = process.env.LDAP_USERNAME;
 const PASSWORD = process.env.LDAP_PASSWORD;
+const API = process.env.API;
+
+if (!API) throw new Error('API Env Var not set');
 
 const csvpath = await fetcher(SERVER, USERNAME, PASSWORD);
 //const csvpath = new URL('/tmp/ldap.csv', 'file://');
 
+const types = ['businesscategory', 'departmentnumber', 'postalcode'];
+
 const stats = {
     count: 0,
-    businesscategory: {},
-    departmentnumber: {},
-    postalcode: {}
 };
 
-const types = ['businesscategory', 'departmentnumber', 'postalcode'];
+for (const type of types) {
+    stats[type] = {};
+}
 
 fs.createReadStream(csvpath.pathname)
     .pipe(csv({ columns: true, skip_empty_lines: true, delimiter: ',' }))
@@ -30,12 +34,18 @@ fs.createReadStream(csvpath.pathname)
             ++stats[type][data[type]];
         }
     })
-    .on('end', () => {
+    .on('end', async () => {
         for (const type of types) {
             stats[type]['uncategorized'] = stats[type][''] || 0;
             delete stats[type][''];
         }
 
-        console.error(stats);
+        await fetch(API, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(stats)
+        });
     });
 
