@@ -1,0 +1,39 @@
+{
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "count",
+        "businesscategory",
+        "departmentnumber"
+    ],
+    "properties": {
+        "count": {
+            "type": "integer",
+            "description": "Total number of users in the system"
+        },
+        "businesscategory": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "integer"
+                }
+            }
+        },
+        "departmentnumber": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "integer"
+                }
+            }
+        },
+        "postalcode": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
