@@ -1,5 +1,6 @@
 {
     "name": "@tak-ps/stats",
+    "private": true,
     "type": "module",
     "version": "1.0.0",
     "description": "Aggregate stats from a TAK LDAP instance",

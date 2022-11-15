@@ -1,5 +1,5 @@
 {
-    "name": "stats",
+    "name": "@tak-ps/stats#api",
     "type": "module",
     "version": "1.0.0",
     "description": "",
