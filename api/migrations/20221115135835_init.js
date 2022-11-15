@@ -1,12 +1,12 @@
 function up(knex) {
     return knex.schema.raw(`
         CREATE TABLE total (
-            dt      PRIMARY KEY DEFAULT NOW(),
+            dt      DATE PRIMARY KEY DEFAULT NOW(),
             count   BIGINT NOT NULL
         );
 
         CREATE TABLE fields (
-            dt      PRIMARY KEY DEFAULT NOW(),
+            dt      DATE PRIMARY KEY DEFAULT NOW(),
             dim     JSONB NOT NULL
         );
     `);
