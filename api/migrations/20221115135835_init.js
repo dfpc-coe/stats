@@ -7,7 +7,8 @@ function up(knex) {
 
         CREATE TABLE fields (
             dt      DATE PRIMARY KEY DEFAULT NOW(),
-            dim     JSONB NOT NULL
+            dim     TEXT NOT NULL,
+            stats   JSONB NOT NULL
         );
     `);
 }
