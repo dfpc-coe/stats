@@ -17,6 +17,20 @@
         "url": "https://github.com/tak-ps/stats/issues"
     },
     "homepage": "https://github.com/tak-ps/stats#readme",
+    "dependencies": {
+        "@openaddresses/batch-error": "^1.1.0",
+        "@openaddresses/batch-generic": "^13.0.1",
+        "@openaddresses/batch-schema": "^7.3.0",
+        "connect-history-api-fallback": "^2.0.0",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "express-minify": "^1.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "knex": "^2.3.0",
+        "minimist": "^1.2.7",
+        "pg": "^8.8.0",
+        "slonik": "^32.0.0"
+    },
     "devDependencies": {
         "apidoc": "^0.53.1",
         "apidoc-plugin-schema2": "^0.1.8",
@@ -30,9 +44,5 @@
         "name": "TAK PS Stats API",
         "title": "TAK PS Stats API",
         "version": "1.0.0"
-    },
-    "dependencies": {
-        "knex": "^2.3.0",
-        "pg": "^8.8.0"
     }
 }
