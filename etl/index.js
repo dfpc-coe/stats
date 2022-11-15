@@ -47,7 +47,7 @@ _err(await fetch(new URL('/lam/templates/login.php?expired=yes', SERVER), {
 
 console.error('ok - authenticated');
 
-const exp = _err(await fetch("https://auth.cotak.gov/lam/templates/tools/importexport.php", {
+const exp = _err(await fetch(new URL("/lam/templates/tools/importexport.php", SERVER), {
     "credentials": "include",
     "headers": {
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0",
@@ -59,7 +59,7 @@ const exp = _err(await fetch("https://auth.cotak.gov/lam/templates/tools/importe
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-User": "?1"
     },
-    "referrer": "https://auth.cotak.gov/lam/templates/tools/importexport.php?tab=export",
+    "referrer": `${SERVER}/lam/templates/tools/importexport.php?tab=export`,
     "method": "GET",
     "mode": "cors"
 }));
@@ -72,7 +72,7 @@ sec_token = sec_token.match(/value="(.*?)"/)[1];
 
 console.error('SEC Token', sec_token);
 
-const pre = _err(await fetch("https://auth.cotak.gov/lam/templates/tools/importexport.php?tab=export", {
+const pre = _err(await fetch(new URL(`/lam/templates/tools/importexport.php?tab=export`, SERVER), {
     "credentials": "include",
     "headers": {
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0",
@@ -87,7 +87,7 @@ const pre = _err(await fetch("https://auth.cotak.gov/lam/templates/tools/importe
         "Pragma": "no-cache",
         "Cache-Control": "no-cache"
     },
-    "referrer": "https://auth.cotak.gov/lam/templates/tools/importexport.php",
+    "referrer": `${SERVER}/lam/templates/tools/importexport.php`,
     "body": `-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"baseDn\"\r\n\r\ndc=cotak,dc=gov\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"searchScope\"\r\n\r\nsub\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"filter\"\r\n\r\n(objectClass=*)\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"attributes\"\r\n\r\n*\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"saveAsFile\"\r\n\r\non\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"format\"\r\n\r\ncsv\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"ending\"\r\n\r\nunix\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"submitExport\"\r\n\r\n\r\n-----------------------------209325389811113026843205198439\r\nContent-Disposition: form-data; name=\"sec_token\"\r\n\r\n${sec_token}\r\n-----------------------------209325389811113026843205198439--\r\n`,
     "method": "POST",
     "mode": "cors"
@@ -95,7 +95,7 @@ const pre = _err(await fetch("https://auth.cotak.gov/lam/templates/tools/importe
 
 await sleep(5000);
 
-const res = _err(await fetch("https://auth.cotak.gov/lam/templates/misc/ajax.php?function=export", {
+const res = _err(await fetch(new URL("/lam/templates/misc/ajax.php?function=export", SERVER), {
     "credentials": "include",
     "headers": {
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0",
@@ -109,7 +109,7 @@ const res = _err(await fetch("https://auth.cotak.gov/lam/templates/misc/ajax.php
         "Pragma": "no-cache",
         "Cache-Control": "no-cache",
     },
-    referrer: "https://auth.cotak.gov/lam/templates/tools/importexport.php?tab=export",
+    referrer: `${SERVER}/lam/templates/tools/importexport.php?tab=export`,
     body: `jsonInput=&sec_token=${sec_token}&baseDn=dc%3Dcotak%2Cdc%3Dgov&searchScope=sub&filter=(objectClass%3D*)&attributes=*&format=csv&ending=unix&includeSystem=false&saveAsFile=true`,
     method: "POST",
     mode: "cors"
