@@ -24,7 +24,8 @@ RUN npm install \
 
 RUN cd web \
     && npm install \
-    && npm run build \
+    && npm install -g yarn \
+    && yarn build \
     && cd ..
 
 CMD service nginx restart \
