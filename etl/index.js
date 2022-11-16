@@ -7,12 +7,11 @@ import fs from 'fs';
 const SERVER = process.env.server || 'https://auth.cotak.gov/';
 const USERNAME = process.env.LDAP_USERNAME;
 const PASSWORD = process.env.LDAP_PASSWORD;
-const API = process.env.API;
 
-if (!API) throw new Error('API Env Var not set');
+const API = process.env.TAK_STATS_API || 'http://localhost:4999';
+const TOKEN = process.env.TAK_STATS_TOKEN || 'coe-wildland-fire';
 
 const csvpath = await fetcher(SERVER, USERNAME, PASSWORD);
-//const csvpath = new URL('/tmp/ldap.csv', 'file://');
 
 const types = ['businesscategory', 'o', 'ou', 'postalcode', 'title'];
 
