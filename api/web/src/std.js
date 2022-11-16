@@ -1,5 +1,11 @@
 function std() {
-    window.std = async function(url, opts = {}, redirect = true) {
+    /**
+     * Standardize interactions with the backend API
+     *
+     * @param {URL|String} url      - Full URL or API fragment to request
+     * @param {Object} [opts={}]    - Options
+     */
+    window.std = async function(url, opts = {}) {
         try {
             url = new URL(url);
         } catch (err) {
@@ -34,9 +40,6 @@ function std() {
                 const err = new Error(bdy.message || `Status Code: ${res.status}`);
                 err.body = bdy;
                 throw err;
-            } else if (redirect && res.status === 401) {
-                delete localStorage.token;
-                return window.location.reload();
             }
 
             return await res.json();
