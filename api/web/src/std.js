@@ -6,6 +6,9 @@ function std() {
             url = new URL(url, window.location.origin);
         }
 
+        // Allow serving through Vue for hotloading
+        if (url.hostname === 'localhost') url.port = '2000'
+
         try {
             if (!opts.headers) opts.headers = {};
 

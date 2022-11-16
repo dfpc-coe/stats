@@ -106,6 +106,7 @@ export default async function server(config) {
         return next();
     });
 
+
     await schema.api();
 
     await schema.load(
@@ -138,6 +139,7 @@ export default async function server(config) {
             }
         }]
     }));
+
     app.use(express.static('web/dist'));
 
     return new Promise((resolve, reject) => {

@@ -33,3 +33,21 @@
 * @apiSchema (Body) {jsonschema=../schema/req.body.Record.json} apiParam
 * @apiSchema {jsonschema=../schema/res.Standard.json} apiSuccess
 */
+
+
+/**
+* @api {get} /total Get Totals
+* @apiVersion 1.0.0
+* @apiName GET-/total
+* @apiGroup Total
+* @apiPermission public
+*
+* @apidescription
+*   Retrieve total users across time
+*
+
+*
+*
+*
+* @apiSchema {jsonschema=../schema/res.ListTotal.json} apiSuccess
+*/
