@@ -12,6 +12,10 @@ export default async function router(schema, config) {
         res: 'res.Standard.json'
     }, async (req, res) => {
         try {
+            if (!req.auth || req.auth.access !== 'machine') {
+                throw new Err(401, null, 'Unauthorized');
+            }
+
             await Total.generate(config.pool, {
                 count: req.body.count
             });

@@ -5,6 +5,8 @@ export default class Config {
     static env(args = {}) {
         const config = new Config();
 
+        config.silent = args.silent;
+
         try {
             if (!process.env.AWS_DEFAULT_REGION) {
                 if (!config.silent) console.error('ok - set env AWS_DEFAULT_REGION: us-east-1');

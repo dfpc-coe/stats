@@ -1,12 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
 import express from 'express';
 import minify from 'express-minify';
 import history from 'connect-history-api-fallback';
 import Schema from '@openaddresses/batch-schema';
-import Err from '@openaddresses/batch-error';
 import { Pool } from '@openaddresses/batch-generic';
 import minimist from 'minimist';
 
@@ -69,7 +67,7 @@ export default async function server(config) {
      */
     app.get('/api', (req, res) => {
         return res.json({
-            version: pkg.version,
+            version: pkg.version
         });
     });
 
@@ -94,42 +92,12 @@ export default async function server(config) {
                 });
             }
 
-            if (authorization[1].split('.')[0] === 'uploader') {
-                try {
-                    req.auth = await Token.validate(config.pool, authorization[1]);
-                    req.auth.type = 'token';
-                } catch (err) {
-                    return Err.respond(err, res);
-                }
+            if (authorization[1] === config.SigningSecret) {
+                req.auth = {
+                    access: 'machine'
+                };
             } else {
-                try {
-                    const decoded = jwt.verify(authorization[1], config.SigningSecret);
-                    if (decoded.type === 'machine') {
-                        req.auth = {
-                            access: 'machine'
-                        };
-                    } else {
-                        req.auth = await User.from(config.pool, decoded.u);
-                        req.auth.type = 'session';
-                    }
-                } catch (err) {
-                    console.error(err);
-                    return Err.respond(new Err(401, err, 'Invalid Token'), res);
-                }
-            }
-        } else if (req.query.token) {
-            try {
-                if (req.query.token[0] === 'e') {
-                    const decoded = jwt.verify(req.query.token, config.SigningSecret);
-                    req.token = await User.from(config.pool, decoded.u);
-                    req.token.type = 'session';
-                } else {
-                    req.token = await Token.validate(config.pool, req.query.token);
-                    req.token.type = 'token';
-                }
-            } catch (err) {
-                console.error(err);
-                return Err.respond(new Err(401, err, 'Invalid Token'), res);
+                req.auth = false;
             }
         } else {
             req.auth = false;
