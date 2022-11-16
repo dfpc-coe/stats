@@ -3,6 +3,15 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="card-title">User Locations</h3>
+
+            <div class='ms-auto'>
+                <div class="btn-list">
+                    <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
+                    <div class="dropdown-menu dropdown-menu-end" style="">
+                        <a class="dropdown-item" href="#">Export</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div id="map" style='height: 350px;'></div>

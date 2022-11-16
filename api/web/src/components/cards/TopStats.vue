@@ -3,13 +3,16 @@
     <div class="card-body">
         <div class="d-flex">
             <h3 class="card-title">Top User Groups</h3>
-            <div class="ms-auto">
-                <div class="dropdown">
-                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Field</a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item active" href="#">Field</a>
-                        <a class="dropdown-item" href="#">Last 30 days</a>
-                        <a class="dropdown-item" href="#">Last 3 months</a>
+
+            <div class='ms-auto'>
+                <div class="btn-list">
+                    <TablerSelect
+                        :values='["Last 30 Days", "Month To Date", "Current Quarter", "Year To Date", "All Time"]'
+                    />
+
+                    <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
+                    <div class="dropdown-menu dropdown-menu-end" style="">
+                        <a class="dropdown-item" href="#">Export</a>
                     </div>
                 </div>
             </div>
