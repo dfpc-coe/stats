@@ -39,12 +39,20 @@ fs.createReadStream(csvpath.pathname)
             delete stats[type][''];
         }
 
-        await fetch(API, {
+        console.error(JSON.stringify(stats, null, 4));
+        const record = await fetch(new URL('/api/record', API), {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `bearer ${TOKEN}`
             },
             body: JSON.stringify(stats)
         });
+
+        if (record.status !== 200) {
+            console.error(await record.text());
+        } else {
+            console.error('ok - results posted');
+        }
     });
 
