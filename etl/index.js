@@ -14,7 +14,7 @@ if (!API) throw new Error('API Env Var not set');
 const csvpath = await fetcher(SERVER, USERNAME, PASSWORD);
 //const csvpath = new URL('/tmp/ldap.csv', 'file://');
 
-const types = ['businesscategory', 'o', 'postalcode'];
+const types = ['businesscategory', 'o', 'ou', 'postalcode', 'title'];
 
 const stats = {
     count: 0,
