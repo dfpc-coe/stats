@@ -24,6 +24,7 @@
                 </div>
 
                 <div class="col-lg-6">
+                    <TopStatsCard/>
                 </div>
             </div>
         </div>
@@ -36,6 +37,7 @@
 <script>
 import RegisteredCard from './cards/Registered.vue';
 import LocationCard from './cards/Location.vue';
+import TopStatsCard from './cards/TopStats.vue';
 import PageFooter from './PageFooter.vue';
 
 export default {
@@ -47,6 +49,7 @@ export default {
     },
     components: {
         PageFooter,
+        TopStatsCard,
         RegisteredCard,
         LocationCard
     }
