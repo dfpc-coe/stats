@@ -1,5 +1,6 @@
 import test from 'tape';
 import Flight from './flight.js';
+import moment from 'moment';
 
 const flight = new Flight();
 
@@ -45,39 +46,71 @@ test('POST: api/record - no auth', async (t) => {
     t.end();
 });
 
+const teams = {
+    'Mesa County SAR': {
+        type: 'SAR',
+        percent: 0.50,
+        positions: ['ops', 'ground', 'tech']
+    },
+    'Larimer County SAR': {
+        type: 'SAR',
+        percent: 0.10,
+        positions: ['ops', 'ground', 'tech']
+    },
+    'Grand Junction PD': {
+        type: 'LEO',
+        percent: 0.20,
+        positions: ['sgt', 'command', 'staff', 'dispatch']
+    },
+    'Mesa County SO': {
+        type: 'LEO',
+        percent: 0.25,
+        positions: ['sgt', 'command', 'rad']
+    },
+    uncategorized: {
+        type: 'uncategorized',
+        percent: 0.05,
+        positions: ['uncategorized']
+    }
+}
+
 test('POST: api/record - success', async (t) => {
     try {
-        const res = await flight.fetch('/api/record', {
-            method: 'POST',
-            headers: {
-                authorization: 'bearer coe-wildland-fire'
-            },
-            body: {
-                count: 50,
-                businesscategory: {
-                    'SAR': 15,
-                    uncategorized: 35
-                },
-                o: {
-                    'Mesa SAR': 43,
-                    uncategorized: 7
-                },
-                ou: {
-                    'Ground Team': 5,
-                    uncategorized: 45
-                },
+        for (let i = 0; i<30; i++) {
+            let count = 500 - (i * 2);
+
+            const body = {
+                count,
+                date: moment().add(i * -1, 'd').format('YYYY-MM-DD'),
+                businesscategory: {},
+                o: {},
+                ou: {},
                 title: {
                     tech: 4,
                     ground: 4,
                     uncategorized: 42
                 }
             }
-        }, true);
+            for (const team of Object.keys(teams)) {
+                body.o[team] = Math.round(count * teams[team].percent)
 
-        t.deepEqual(res.body, {
-            status: 200,
-            message: 'Recorded Stats'
-        });
+                if (!body.businesscategory[teams[team].type]) body.businesscategory[teams[team].type] = 0;
+                body.businesscategory[teams[team].type] += Math.round(count * teams[team].percent);
+            };
+
+            // TODO maybe populate subcategory some day
+            body.ou.uncategorized = count;
+
+            console.error(body);
+
+            const res = await flight.fetch('/api/record', {
+                method: 'POST',
+                headers: {
+                    authorization: 'bearer coe-wildland-fire'
+                },
+                body
+            }, true);
+        }
     } catch (err) {
         t.error(err, 'no error');
     }
