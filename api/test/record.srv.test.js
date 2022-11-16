@@ -72,12 +72,12 @@ const teams = {
         percent: 0.05,
         positions: ['uncategorized']
     }
-}
+};
 
 test('POST: api/record - success', async (t) => {
     try {
-        for (let i = 0; i<30; i++) {
-            let count = 500 - (i * 2) - Math.floor(Math.random() * 20);
+        for (let i = 0; i < 30; i++) {
+            const count = 500 - (i * 2) - Math.floor(Math.random() * 20);
 
             const body = {
                 count,
@@ -86,22 +86,22 @@ test('POST: api/record - success', async (t) => {
                 o: {},
                 ou: {},
                 title: {}
-            }
+            };
             for (const team of Object.keys(teams)) {
-                body.o[team] = Math.round(count * teams[team].percent)
+                body.o[team] = Math.round(count * teams[team].percent);
 
                 if (!body.businesscategory[teams[team].type]) body.businesscategory[teams[team].type] = 0;
                 body.businesscategory[teams[team].type] += Math.round(count * teams[team].percent);
 
                 for (const title of teams[team].positions) {
-                    body.title[title] = Math.round((count * teams[team].percent) * 1 / teams[team].positions.length)
+                    body.title[title] = Math.round((count * teams[team].percent) * 1 / teams[team].positions.length);
                 }
-            };
+            }
 
             // TODO maybe populate subcategory some day
             body.ou.uncategorized = count;
 
-            const res = await flight.fetch('/api/record', {
+            await flight.fetch('/api/record', {
                 method: 'POST',
                 headers: { authorization: 'bearer coe-wildland-fire' },
                 body
