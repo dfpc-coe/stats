@@ -1,18 +1,28 @@
 {
     "type": "object",
     "required": [
-        "count",
-        "total"
+        "totals"
     ],
     "additionalProperties": false,
     "properties": {
-        "status": {
-            "type": "integer",
-            "description": "The HTTP Status Code of the response"
-        },
-        "message": {
-            "type": "string",
-            "description": "A human readable status message"
+        "totals": {
+            "type": "array",
+            "items":  {
+                "type": "object",
+                "required": [
+                    "dt",
+                    "count"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "dt": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "integer"
+                    }
+                }
+            }
         }
     }
 }

@@ -23,7 +23,10 @@
                         id: "total-users",
                         zoom: {
                             enabled: false
-                        }
+                        },
+                    },
+                    xaxis: {
+                        type: "datetime"
                     }
                 }'
                 :series='series'
@@ -52,9 +55,11 @@ export default {
     },
     methods: {
         fetch: async function() {
-            const total = await window.std('/api/total');
+            const list = await window.std('/api/total');
 
-            console.error(total);
+            this.series[0].data = list.totals.map((total) => {
+                return { x: new Date(total.dt), y: total.count };
+            });
         }
     },
     components: {
