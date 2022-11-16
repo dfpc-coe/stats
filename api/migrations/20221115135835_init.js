@@ -6,9 +6,11 @@ function up(knex) {
         );
 
         CREATE TABLE fields (
-            dt      DATE PRIMARY KEY DEFAULT NOW(),
+            dt      DATE DEFAULT NOW(),
             dim     TEXT NOT NULL,
-            stats   JSONB NOT NULL
+            stats   JSONB NOT NULL,
+
+            PRIMARY KEY (dt, dim)
         );
     `);
 }

@@ -3,7 +3,7 @@ const Pool = PG.Pool;
 
 export default async function drop() {
     const pool = new Pool({
-        connectionString: process.env.POSTGRES || 'postgres://postgres@localhost:5432/uploader'
+        connectionString: process.env.POSTGRES || 'postgres://postgres@localhost:5432/tak_ps_stats'
     });
 
     const pgres = await pool.query(`

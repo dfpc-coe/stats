@@ -8,7 +8,7 @@ const flight = new Flight();
 flight.init(test);
 flight.takeoff(test);
 
-test('POST: api/record - no auth', async () => {
+test('POST: api/record - no auth', async (t) => {
     try {
         const res = await flight.fetch('/api/record', {
             method: 'POST',
@@ -34,18 +34,20 @@ test('POST: api/record - no auth', async () => {
             }
         }, false);
 
-        assert.equal(res.status, 401, 'http: 401');
-        assert.deepEqual(res.body, {
+        t.equal(res.status, 401, 'http: 401');
+        t.deepEqual(res.body, {
             status: 401,
             message: 'Unauthorized',
             messages: []
         });
     } catch (err) {
-        assert.ifError(err, 'no error');
+        t.error(err, 'no error');
     }
+
+    t.end();
 });
 
-test('POST: api/record - success', async () => {
+test('POST: api/record - success', async (t) => {
     try {
         const res = await flight.fetch('/api/record', {
             method: 'POST',
@@ -74,13 +76,15 @@ test('POST: api/record - success', async () => {
             }
         }, true);
 
-        assert.deepEqual(res.body, {
+        t.deepEqual(res.body, {
             status: 200,
-            message: 'Unauthorized'
+            message: 'Recorded Stats'
         })
     } catch (err) {
-        assert.ifError(err, 'no error');
+        t.error(err, 'no error');
     }
+
+    t.end();
 });
 
 flight.landing(test);
