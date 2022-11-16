@@ -4,7 +4,9 @@
     "required": [
         "count",
         "businesscategory",
-        "departmentnumber"
+        "o",
+        "ou",
+        "title"
     ],
     "properties": {
         "count": {
@@ -19,7 +21,23 @@
                 }
             }
         },
-        "departmentnumber": {
+        "o": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "integer"
+                }
+            }
+        },
+        "ou": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "type": "integer"
+                }
+            }
+        },
+        "title": {
             "type": "object",
             "patternProperties": {
                 ".*": {
