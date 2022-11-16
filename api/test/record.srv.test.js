@@ -1,6 +1,4 @@
-import fs from 'fs';
 import test from 'tape';
-import assert from 'assert';
 import Flight from './flight.js';
 
 const flight = new Flight();
@@ -52,7 +50,7 @@ test('POST: api/record - success', async (t) => {
         const res = await flight.fetch('/api/record', {
             method: 'POST',
             headers: {
-                authorization: `bearer coe-wildland-fire`
+                authorization: 'bearer coe-wildland-fire'
             },
             body: {
                 count: 50,
@@ -79,7 +77,7 @@ test('POST: api/record - success', async (t) => {
         t.deepEqual(res.body, {
             status: 200,
             message: 'Recorded Stats'
-        })
+        });
     } catch (err) {
         t.error(err, 'no error');
     }
