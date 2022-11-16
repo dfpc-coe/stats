@@ -1,120 +1,79 @@
 <template>
-    <div class='col col--12'>
-        <div class='col col--12 clearfix py6 relative'>
-            <span class='color-white'>Uploads</span>
-
-            <div class='fr color-white'>
-                <label class='switch-container px6'>
-                    <span class='mr6'>Archived</span>
-                    <input v-model='archived' type='checkbox' />
-                    <div class='switch'></div>
-                </label>
-            </div>
-        </div>
-        <div class='round relative bg-white pb12'>
-            <template v-if='showSearch'>
-                <div class='col col--12 px24 py6'>
-                    <div class='relative'>
-                        <div class='absolute flex flex--center-cross flex--center-main w36 h36'>
-                            <svg class='icon'><use xlink:href='#icon-search'></use></svg>
-                        </div>
-                        <input ref='search' v-model='search' class='input pl36' placeholder='Upload Name'>
+<div>
+    <div class='page-wrapper'>
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <h2 class="page-title">Charts</h2>
                     </div>
                 </div>
-            </template>
-            <template v-if='loading.uploads'>
-                <Loading desc='Loading Uploads'/>
-            </template>
-            <template v-else-if='uploads.length === 0'>
-                <None name='Uploads'/>
-            </template>
-            <template v-else>
-                <div :key='upload.id' v-for='upload in uploads.slice(page * 10, page * 10 + 10)'>
-                    <UploadItem :upload='upload'/>
-                </div>
-
-                <Pager
-                    @page='page = $event'
-                    :total='uploads.length'
-                    perpage='10'
-                />
-            </template>
+            </div>
         </div>
     </div>
+
+    <div class='page-body'>
+        <div class='container-xl'>
+            <div class='row row-deck row-cards'>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Sales</div>
+                                <div class="ms-auto lh-1">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item active" href="#">Last 7 days</a>
+                                            <a class="dropdown-item" href="#">Last 30 days</a>
+                                            <a class="dropdown-item" href="#">Last 3 months</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h1 mb-3">75%</div>
+                            <div class="d-flex mb-2">
+                                <div>Conversion rate</div>
+                                <div class="ms-auto">
+                                    <span class="text-green d-inline-flex align-items-center lh-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
+                                    <span class="visually-hidden">75% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <RegisteredCard/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <PageFooter/>
+</div>
 </template>
 
 <script>
+import RegisteredCard from './cards/Registered.vue';
+import PageFooter from './PageFooter.vue';
+
 export default {
     name: 'Home',
-    props: ['meta', 'user'],
     data: function() {
         return {
-            page: 0,
-            showSearch: false,
-            search: '',
-            archived: false,
-            uploads: [],
-            loading: {
-                uploads: true
-            }
+            err: false,
         }
     },
-    mounted: function() {
-        this.refresh();
-
-        if (!this.user || !this.user.access) return this.$router.push('/login');
-
-        window.addEventListener('keydown', (e) => {
-            if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
-                e.preventDefault();
-                this.showSearch = true;
-                this.$refs.search.focus()
-            } else if (e.keyCode === 27) {
-                e.preventDefault();
-                this.showSearch = false;
-            }
-        })
-    },
-    watch: {
-        showSearch: function() {
-            if (!this.showSearch) this.search = '';
-
-            this.$nextTick(() => {
-                if (this.showSearch) this.$refs.search.focus()
-            });
-        },
-        search: function() {
-            this.refresh();
-        },
-        archived: function() {
-            this.refresh();
-        }
-    },
-    methods: {
-        refresh: function() {
-            this.page = 0;
-            this.getUploads();
-        },
-        external: function(url) {
-            if (!url) return;
-            window.open(url, "_blank")
-        },
-        getUploads: async function() {
-            this.loading.uploads = true;
-            this.uploads = [];
-
-            try {
-                const url = new URL('/api/upload', window.api);
-                url.searchParams.append('filter', this.search);
-                url.searchParams.append('archived', this.archived);
-                const uploads = await window.std(url);
-
-                this.uploads = uploads.uploads;
-                this.loading.uploads = false;
-            } catch (err) {
-                this.$emit('err', err);
-            }
-        }
+    components: {
+        PageFooter,
+        RegisteredCard
     }
 }
 </script>
