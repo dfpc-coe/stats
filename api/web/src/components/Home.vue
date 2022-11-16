@@ -18,6 +18,13 @@
                 <div class="col-lg-12">
                     <RegisteredCard/>
                 </div>
+
+                <div class="col-lg-6">
+                    <LocationCard/>
+                </div>
+
+                <div class="col-lg-6">
+                </div>
             </div>
         </div>
     </div>
@@ -28,6 +35,7 @@
 
 <script>
 import RegisteredCard from './cards/Registered.vue';
+import LocationCard from './cards/Location.vue';
 import PageFooter from './PageFooter.vue';
 
 export default {
@@ -39,7 +47,8 @@ export default {
     },
     components: {
         PageFooter,
-        RegisteredCard
+        RegisteredCard,
+        LocationCard
     }
 }
 </script>
