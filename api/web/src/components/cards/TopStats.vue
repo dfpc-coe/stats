@@ -71,8 +71,8 @@ export default {
                 agg.percent = agg.count / total;
                 return agg;
             }).sort((a, b) => {
-                return b - a;
-            });
+                return b.percent - a.percent;
+            }).splice(0, 6);
         }
     }
 }
