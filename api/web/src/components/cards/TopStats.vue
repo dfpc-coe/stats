@@ -70,6 +70,8 @@ export default {
             this.agg = aggs.map((agg) => {
                 agg.percent = agg.count / total;
                 return agg;
+            }).sort((a, b) => {
+                return b - a;
             });
         }
     }
