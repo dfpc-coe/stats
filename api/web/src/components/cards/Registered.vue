@@ -26,10 +26,7 @@
                         }
                     }
                 }'
-                :series='[{
-                  name: "users",
-                  data: [30, 40, 35, 50, 49, 60, 70, 91]
-                }]'
+                :series='series'
             />
         </div>
     </div>
@@ -43,7 +40,21 @@ export default {
     name: 'RegisteredCard',
     data: function() {
         return {
-            scale: 7
+            scale: 7,
+            series: [{
+                name: 'users',
+                data: []
+            }]
+        }
+    },
+    mounted: function() {
+        this.fetch();
+    },
+    methods: {
+        fetch: async function() {
+            const total = await window.std('/api/total');
+
+            console.error(total);
         }
     },
     components: {
