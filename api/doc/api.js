@@ -18,6 +18,24 @@
 
 
 /**
+* @api {get} /aggregate/:aggregate Get Aggregates
+* @apiVersion 1.0.0
+* @apiName GET-/aggregate/:aggregate
+* @apiGroup Aggregate
+* @apiPermission public
+*
+* @apidescription
+*   Retrieve aggregates for a given time range
+*
+* @apiParam {string} aggregate param
+*
+*
+*
+* @apiSchema {jsonschema=../schema/res.Aggregate.json} apiSuccess
+*/
+
+
+/**
 * @api {post} /record Record Stats
 * @apiVersion 1.0.0
 * @apiName POST-/record

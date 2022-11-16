@@ -11,8 +11,6 @@ export default async function router(schema, config) {
     }, async (req, res) => {
         try {
             const list = await Total.list(config.pool);
-
-            console.error(list);
             return res.json(list);
         } catch (err) {
             return Err.respond(err, res);

@@ -5,9 +5,9 @@
             <h3 class="card-title">Top User Groups</h3>
             <div class="ms-auto">
                 <div class="dropdown">
-                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Field</a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item active" href="#">Last 7 days</a>
+                        <a class="dropdown-item active" href="#">Field</a>
                         <a class="dropdown-item" href="#">Last 30 days</a>
                         <a class="dropdown-item" href="#">Last 3 months</a>
                     </div>
@@ -23,12 +23,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr :key='s.name' v-for='s in series'>
-                        <td v-text='s.name'></td>
-                        <td v-text='s.count'></td>
+                    <tr :key='a.name' v-for='a in agg'>
+                        <td v-text='a.name'></td>
+                        <td v-text='a.count'></td>
                         <td class="w-50">
                             <div class="progress progress-xs">
-                                <div class="progress-bar bg-primary" style="width: 71.0%"></div>
+                                <div
+                                    class="progress-bar bg-primary"
+                                    :style='`width: ${a.percent * 100}%;`'
+                                ></div>
                             </div>
                         </td>
                     </tr>
@@ -44,8 +47,7 @@ export default {
     name: 'TopStats',
     data: function() {
         return {
-            scale: 7,
-            series: []
+            agg: {}
         }
     },
     mounted: function() {
@@ -53,10 +55,21 @@ export default {
     },
     methods: {
         fetch: async function() {
-            const list = await window.std('/api/aggregate/');
+            const agg = await window.std('/api/aggregate/o');
 
-            this.series[0].data = list.totals.map((total) => {
-                return { x: new Date(total.dt), y: total.count };
+            let aggs = [];
+            let total = 0;
+            for (const name in agg) {
+                total += agg[name];
+                aggs.push({
+                    name,
+                    count: agg[name]
+                });
+            }
+
+            this.agg = aggs.map((agg) => {
+                agg.percent = agg.count / total;
+                return agg;
             });
         }
     }

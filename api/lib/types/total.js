@@ -24,7 +24,7 @@ export default class Total extends Generic {
                 totals: pgres.rows
             }
         } catch (err) {
-            throw new Err(500, err, 'Failed to list basemaps');
+            throw new Err(500, err, 'Failed to list totals');
         }
     }
 }
