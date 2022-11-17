@@ -6,7 +6,8 @@
         "businesscategory",
         "o",
         "ou",
-        "title"
+        "title",
+        "postalcode"
     ],
     "properties": {
         "count": {

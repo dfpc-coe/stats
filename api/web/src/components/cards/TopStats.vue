@@ -7,7 +7,7 @@
             <div class='ms-auto'>
                 <div class="btn-list">
                     <TablerSelect
-                        :values='["Last 30 Days", "Month To Date", "Current Quarter", "Year To Date", "All Time"]'
+                        :values='["Category", "Agency", "SubAgency", "Title", "ZipCode"]'
                     />
 
                     <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
@@ -46,11 +46,20 @@
 </template>
 
 <script>
+import TablerSelect from '../util/Select.vue';
+
 export default {
     name: 'TopStats',
     data: function() {
         return {
-            agg: {}
+            agg: {},
+            convert: {
+                Category: 'businesscategory',
+                Agency: 'o',
+                SubAgency: 'ou',
+                Title: 'title',
+                ZipCode: 'postalcode'
+            }
         }
     },
     mounted: function() {
@@ -83,6 +92,9 @@ export default {
             if (url.hostname === 'localhost') url.port = '4999'
             window.open(url, "_blank")
         }
+    },
+    components: {
+        TablerSelect
     }
 }
 </script>
