@@ -7,7 +7,9 @@
             <div class='ms-auto'>
                 <div class="btn-list">
                     <TablerSelect
+                        :default='current'
                         :values='["Category", "Agency", "SubAgency", "Title", "ZipCode"]'
+                        @select='fetch($event)'
                     />
 
                     <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
@@ -53,6 +55,7 @@ export default {
     data: function() {
         return {
             agg: {},
+            current: 'Agency',
             convert: {
                 Category: 'businesscategory',
                 Agency: 'o',
@@ -66,8 +69,11 @@ export default {
         this.fetch();
     },
     methods: {
-        fetch: async function() {
-            const agg = await window.std('/api/aggregate/o');
+        fetch: async function(current) {
+            if (this.current === current) return;
+            if (current) this.current = current;
+
+            const agg = await window.std(`/api/aggregate/${this.convert[this.current]}`);
 
             let aggs = [];
             let total = 0;

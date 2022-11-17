@@ -29,8 +29,17 @@ export default {
             current: ''
         }
     },
+    watch: {
+        current: function() {
+            this.$emit('select', this.current);
+        }
+    },
     mounted: function() {
-        if (!this.default) this.current = this.values[0];
+        if (!this.default) {
+            this.current = this.values[0];
+        } else {
+            this.current = this.default;
+        }
     },
     methods: {
     },
