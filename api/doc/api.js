@@ -49,23 +49,23 @@
 *
 *
 *
-* @apiSchema {jsonschema=../schema/res.ListTotal.json} apiSuccess
+* @apiSchema {jsonschema=../schema/res.ListField.json} apiSuccess
 */
 
 
 /**
-* @api {get} /total/export Export Totals
+* @api {get} /field/export Export Fields
 * @apiVersion 1.0.0
-* @apiName GET-/total/export
-* @apiGroup Total
+* @apiName GET-/field/export
+* @apiGroup Field
 * @apiPermission public
 *
 * @apidescription
-*   Export total users across time to a CSV
+*   Export all fields for a given time range to a CSV
 *
 
 *
-* @apiSchema (Query) {jsonschema=../schema/req.query.ExportTotal.json} apiParam
+* @apiSchema (Query) {jsonschema=../schema/req.query.ExportField.json} apiParam
 *
 *
 */
