@@ -29,6 +29,9 @@ test('POST: api/record - no auth', async (t) => {
                     tech: 4,
                     ground: 4,
                     uncategorized: 42
+                },
+                postalcode: {
+                    uncategorized: 50
                 }
             }
         }, false);
@@ -50,27 +53,32 @@ const teams = {
     'Mesa County SAR': {
         type: 'SAR',
         percent: 0.50,
-        positions: ['ops', 'ground', 'tech']
+        positions: ['ops', 'ground', 'tech'],
+        postalcode: ['81507', '81521']
     },
     'Larimer County SAR': {
         type: 'SAR',
         percent: 0.10,
-        positions: ['ops', 'ground', 'tech']
+        positions: ['ops', 'ground', 'tech'],
+        postalcode: ['81507', '81521']
     },
     'Grand Junction PD': {
         type: 'LEO',
         percent: 0.20,
-        positions: ['sgt', 'command', 'staff', 'dispatch']
+        positions: ['sgt', 'command', 'staff', 'dispatch'],
+        postalcode: ['81507', '81521']
     },
     'Mesa County SO': {
         type: 'LEO',
         percent: 0.25,
-        positions: ['sgt', 'command', 'rad']
+        positions: ['sgt', 'command', 'rad'],
+        postalcode: ['81507', '81521']
     },
     uncategorized: {
         type: 'uncategorized',
         percent: 0.05,
-        positions: ['uncategorized']
+        positions: ['uncategorized'],
+        postalcode: ['81507', '81521']
     }
 };
 
@@ -83,6 +91,7 @@ test('POST: api/record - success', async (t) => {
                 count,
                 date: moment().add(i * -1, 'd').format('YYYY-MM-DD'),
                 businesscategory: {},
+                postalcode: {},
                 o: {},
                 ou: {},
                 title: {}
@@ -95,6 +104,9 @@ test('POST: api/record - success', async (t) => {
 
                 for (const title of teams[team].positions) {
                     body.title[title] = Math.round((count * teams[team].percent) * 1 / teams[team].positions.length);
+                }
+                for (const zip of teams[team].postalcode) {
+                    body.postalcode[zip] = Math.round((count * teams[team].percent) * 1 / teams[team].postalcode.length);
                 }
             }
 
