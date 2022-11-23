@@ -1,4 +1,5 @@
 import Generic from '@openaddresses/batch-generic';
+import { Params } from '@openaddresses/batch-generic';
 import Err from '@openaddresses/batch-error';
 import { sql } from 'slonik';
 
@@ -9,6 +10,12 @@ export default class Total extends Generic {
     static _table = 'total';
 
     static async list(pool, query={}) {
+        query.sort = Params.string(query.sort, { default: 'dt' });
+        query.order = Params.order(query.order);
+
+        query.after = Params.timestamp(query.after);
+        query.before = Params.timestamp(query.before);
+
         try {
             const pgres = await pool.query(sql`
                 SELECT
@@ -16,8 +23,11 @@ export default class Total extends Generic {
                     count
                 FROM
                     total
+                WHERE
+                    (${query.before}::TIMESTAMP IS NOT NULL OR dt < ${query.before}::TIMESTAMP)
+                    AND (${query.after}::TIMESTAMP IS NOT NULL OR dt > ${query.after}::TIMESTAMP)
                 ORDER BY
-                    dt DESC
+                    ${sql.identifier(['total', query.sort])} ${query.order}
             `);
 
             return {
