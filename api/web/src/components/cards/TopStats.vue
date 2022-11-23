@@ -11,11 +11,6 @@
                         :values='["Category", "Agency", "SubAgency", "Title", "ZipCode"]'
                         @select='fetch($event)'
                     />
-
-                    <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
-                    <div class="dropdown-menu dropdown-menu-end" style="">
-                        <a @click='getExport' class="dropdown-item" href="#">Export</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -91,12 +86,6 @@ export default {
             }).sort((a, b) => {
                 return b.percent - a.percent;
             }).splice(0, 6);
-        },
-        getExport: async function() {
-            const url = new URL('/api/total/export', window.location.origin);
-            // Allow serving through Vue for hotloading
-            if (url.hostname === 'localhost') url.port = '4999'
-            window.open(url, "_blank")
         }
     },
     components: {
