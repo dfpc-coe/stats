@@ -24,8 +24,8 @@ export default class Total extends Generic {
                 FROM
                     total
                 WHERE
-                    (${query.before}::TIMESTAMP IS NOT NULL OR dt < ${query.before}::TIMESTAMP)
-                    AND (${query.after}::TIMESTAMP IS NOT NULL OR dt > ${query.after}::TIMESTAMP)
+                    (${query.before}::TIMESTAMP IS NULL OR dt < ${query.before}::TIMESTAMP)
+                    AND (${query.after}::TIMESTAMP IS NULL OR dt > ${query.after}::TIMESTAMP)
                 ORDER BY
                     ${sql.identifier(['total', query.sort])} ${query.order}
             `);

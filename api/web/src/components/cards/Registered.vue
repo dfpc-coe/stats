@@ -21,6 +21,7 @@
         </div>
         <div class="row">
             <ApexChart
+                :key='current'
                 type='line'
                 height='350'
                 :options='options'
@@ -84,8 +85,8 @@ export default {
                 url.searchParams.append('after', dt.format('YYYY-MM-DD'));
                 this.options.xaxis.min = dt.toDate().getTime();
             } else if (this.current === 'Year To Date') {
-                const dt = moment();
-                url.searchParams.append('after', dt.format('YYYY'));
+                const dt = moment(moment().format('YYYY') + '-01-01');
+                url.searchParams.append('after', dt.format('YYYY-MM-DD'));
                 this.options.xaxis.min = dt.toDate().getTime();
             } else {
                 delete this.options.xaxis.min;

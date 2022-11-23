@@ -12,7 +12,7 @@ export default async function router(schema, config) {
         res: 'res.ListTotal.json'
     }, async (req, res) => {
         try {
-            const list = await Total.list(config.pool);
+            const list = await Total.list(config.pool, req.query);
             return res.json(list);
         } catch (err) {
             return Err.respond(err, res);
