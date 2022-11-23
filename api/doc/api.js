@@ -72,6 +72,42 @@
 
 
 /**
+* @api {get} /states TileJSON
+* @apiVersion 1.0.0
+* @apiName GET-/states
+* @apiGroup States
+* @apiPermission public
+*
+* @apidescription
+*   Retrieve TileJSON for States VT
+*
+
+*
+*
+*
+* @apiSchema {jsonschema=../schema/res.ListTotal.json} apiSuccess
+*/
+
+
+/**
+* @api {get} /total/export Export Totals
+* @apiVersion 1.0.0
+* @apiName GET-/total/export
+* @apiGroup Total
+* @apiPermission public
+*
+* @apidescription
+*   Export total users across time to a CSV
+*
+
+*
+* @apiSchema (Query) {jsonschema=../schema/req.query.ExportTotal.json} apiParam
+*
+*
+*/
+
+
+/**
 * @api {post} /record Record Stats
 * @apiVersion 1.0.0
 * @apiName POST-/record
