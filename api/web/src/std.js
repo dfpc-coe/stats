@@ -1,5 +1,5 @@
 function std() {
-    window.stdurl = function() {
+    window.stdurl = function(url) {
         try {
             url = new URL(url);
         } catch (err) {
@@ -19,7 +19,7 @@ function std() {
      * @param {Object} [opts={}]    - Options
      */
     window.std = async function(url, opts = {}) {
-        const url = window.stdurl(url)
+        url = window.stdurl(url)
 
         try {
             if (!opts.headers) opts.headers = {};

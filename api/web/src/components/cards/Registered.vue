@@ -23,17 +23,7 @@
             <ApexChart
                 type='line'
                 height='350'
-                :options='{
-                    chart: {
-                        id: "total-users",
-                        zoom: {
-                            enabled: false
-                        },
-                    },
-                    xaxis: {
-                        type: "datetime"
-                    }
-                }'
+                :options='options'
                 :series='series'
             />
         </div>
@@ -42,6 +32,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import VueApexCharts from 'vue3-apexcharts'
 import TablerSelect from '../util/Select.vue';
 
@@ -54,7 +45,18 @@ export default {
             series: [{
                 name: 'users',
                 data: []
-            }]
+            }],
+            options: {
+                chart: {
+                    id: "total-users",
+                    zoom: {
+                        enabled: false
+                    },
+                },
+                xaxis: {
+                    type: "datetime"
+                }
+            }
         }
     },
     mounted: function() {
@@ -70,13 +72,23 @@ export default {
             const url = await window.stdurl('/api/total');
 
             if (this.current === 'Last 30 Days') {
-                url.searchParams.append('after', moment().subtract(30, 'd').format('YYYY-MM-DD'));
+                const dt = moment().subtract(30, 'd');
+                url.searchParams.append('after', dt.format('YYYY-MM-DD'));
+                this.options.xaxis.min = dt.toDate().getTime();
             } else if (this.current === 'Month To Date') {
-                url.searchParams.append('after', moment().startOf('month').format('YYYY-MM-DD'));
+                const dt = moment().startOf('month');
+                url.searchParams.append('after', dt.format('YYYY-MM-DD'));
+                this.options.xaxis.min = dt.toDate().getTime();
             } else if (this.current === "Current Quarter") {
-                url.searchParams.append('after', moment().quarter(moment().quarter()).startOf('quarter').format('YYYY-MM-DD'));
+                const dt = moment().quarter(moment().quarter()).startOf('quarter');
+                url.searchParams.append('after', dt.format('YYYY-MM-DD'));
+                this.options.xaxis.min = dt.toDate().getTime();
             } else if (this.current === 'Year To Date') {
-                url.searchParams.append('after', moment().format('YYYY'));
+                const dt = moment();
+                url.searchParams.append('after', dt.format('YYYY'));
+                this.options.xaxis.min = dt.toDate().getTime();
+            } else {
+                delete this.options.xaxis.min;
             }
 
             const list = await window.std(url);
