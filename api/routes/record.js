@@ -1,4 +1,5 @@
 import Err from '@openaddresses/batch-error';
+import moment from 'moment';
 import Total from '../lib/types/total.js';
 import Field from '../lib/types/field.js';
 
@@ -16,7 +17,7 @@ export default async function router(schema, config) {
                 throw new Err(401, null, 'Unauthorized');
             }
 
-            const dt = req.body.date || null;
+            const dt = req.body.date || moment().format('YYYY-MM-DD');
             delete req.body.date;
 
             await Total.generate(config.pool, {
