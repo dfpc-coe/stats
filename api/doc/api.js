@@ -79,29 +79,31 @@
 * @apiPermission public
 *
 * @apidescription
-*   Retrieve TileJSON for States VT
+*   Retrieve TileJSON for States MVTs
 *
 
 *
 *
 *
-* @apiSchema {jsonschema=../schema/res.ListTotal.json} apiSuccess
+* @apiSchema {jsonschema=../schema/res.TileJSON.json} apiSuccess
 */
 
 
 /**
-* @api {get} /total/export Export Totals
+* @api {get} /states/:z/:x/:y Get Tile
 * @apiVersion 1.0.0
-* @apiName GET-/total/export
-* @apiGroup Total
+* @apiName GET-/states/:z/:x/:y
+* @apiGroup States
 * @apiPermission public
 *
 * @apidescription
-*   Export total users across time to a CSV
+*   Get MVT for a given tile
 *
-
+* @apiParam {integer} z param
+* @apiParam {integer} x param
+* @apiParam {integer} y param
 *
-* @apiSchema (Query) {jsonschema=../schema/req.query.ExportTotal.json} apiParam
+*
 *
 *
 */

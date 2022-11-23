@@ -1,4 +1,5 @@
 import Err from '@openaddresses/batch-error';
+import TileBase from 'tilebase'
 
 export default async function router(schema, config) {
     await schema.get('/states', {
@@ -20,6 +21,9 @@ export default async function router(schema, config) {
         group: 'States',
         auth: 'public',
         description: 'Get MVT for a given tile',
+        ':z': 'integer',
+        ':x': 'integer',
+        ':y': 'integer'
     }, async (req, res) => {
         try {
             return res.json({});
