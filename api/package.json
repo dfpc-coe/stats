@@ -36,7 +36,8 @@
         "minimist": "^1.2.7",
         "moment": "^2.29.4",
         "pg": "^8.8.0",
-        "slonik": "^32.0.0"
+        "slonik": "^32.0.0",
+        "tilebase": "^4.0.0"
     },
     "devDependencies": {
         "apidoc": "^0.53.1",
