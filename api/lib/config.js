@@ -19,12 +19,14 @@ export default class Config {
 
                 config.StackName = 'test';
                 config.SigningSecret = 'coe-wildland-fire';
+                config.TileBaseURL = new URL('./data/zipcodes.tilebase', import.meta.url);
             } else {
                 if (!process.env.StackName) throw new Error('StackName env must be set');
                 if (!process.env.SigningSecret) throw new Error('SigningSecret env must be set');
 
                 config.StackName = process.env.StackName;
                 config.SigningSecret = process.env.SigningSecret;
+                config.TileBaseURL = new URL(process.env.TileBaseURL) || new URL('./data/zipcodes.tilebase', import.meta.url);
             }
         } catch (err) {
             throw new Error(err);

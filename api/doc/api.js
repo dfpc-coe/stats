@@ -72,14 +72,14 @@
 
 
 /**
-* @api {get} /states TileJSON
+* @api {get} /zipcodes TileJSON
 * @apiVersion 1.0.0
-* @apiName GET-/states
-* @apiGroup States
+* @apiName GET-/zipcodes
+* @apiGroup Zipcodes
 * @apiPermission public
 *
 * @apidescription
-*   Retrieve TileJSON for States MVTs
+*   Retrieve TileJSON for zipcode MVTs
 *
 
 *
@@ -90,10 +90,10 @@
 
 
 /**
-* @api {get} /states/:z/:x/:y Get Tile
+* @api {get} /zipcodes/:z/:x/:y Get Tile
 * @apiVersion 1.0.0
-* @apiName GET-/states/:z/:x/:y
-* @apiGroup States
+* @apiName GET-/zipcodes/:z/:x/:y
+* @apiGroup Zipcodes
 * @apiPermission public
 *
 * @apidescription

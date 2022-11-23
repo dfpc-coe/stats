@@ -7,6 +7,7 @@ import history from 'connect-history-api-fallback';
 import Schema from '@openaddresses/batch-schema';
 import { Pool } from '@openaddresses/batch-generic';
 import minimist from 'minimist';
+import TileBase from 'tilebase';
 
 import Config from './lib/config.js';
 
@@ -37,6 +38,9 @@ export default async function server(config) {
             dir: new URL('./schema', import.meta.url)
         }
     });
+
+    config.tb = new TileBase(config.TileBaseURL);
+    config.tb.open()
 
     const app = express();
 
