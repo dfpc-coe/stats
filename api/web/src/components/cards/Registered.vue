@@ -7,7 +7,9 @@
             <div class='ms-auto'>
                 <div class="btn-list">
                     <TablerSelect
+                        :default='current'
                         :values='["Last 30 Days", "Month To Date", "Current Quarter", "Year To Date", "All Time"]'
+                        @select='current = $event'
                     />
 
                     <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
@@ -47,6 +49,7 @@ export default {
     name: 'RegisteredCard',
     data: function() {
         return {
+            current: 'Last 30 Days',
             scale: 7,
             series: [{
                 name: 'users',
@@ -57,9 +60,26 @@ export default {
     mounted: function() {
         this.fetch();
     },
+    watch: {
+        current: function() {
+            this.fetch();
+        }
+    },
     methods: {
         fetch: async function() {
-            const list = await window.std('/api/total');
+            const url = await window.stdurl('/api/total');
+
+            if (this.current === 'Last 30 Days') {
+                url.searchParams.append('after', moment().subtract(30, 'd').format('YYYY-MM-DD'));
+            } else if (this.current === 'Month To Date') {
+                url.searchParams.append('after', moment().startOf('month').format('YYYY-MM-DD'));
+            } else if (this.current === "Current Quarter") {
+                url.searchParams.append('after', moment().quarter(moment().quarter()).startOf('quarter').format('YYYY-MM-DD'));
+            } else if (this.current === 'Year To Date') {
+                url.searchParams.append('after', moment().format('YYYY'));
+            }
+
+            const list = await window.std(url);
 
             this.series[0].data = list.totals.map((total) => {
                 return { x: new Date(total.dt), y: total.count };
