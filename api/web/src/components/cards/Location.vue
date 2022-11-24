@@ -8,13 +8,10 @@
             <div id="map" style='height: 350px;'></div>
         </div>
     </div>
-
-     <Err v-if='err' :err='err' @close='err = null'/>
 </div>
 </template>
 
 <script>
-import Err from '../Err.vue';
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -25,10 +22,11 @@ export default {
             err: false,
             tilejson: {},
             map: false,
-            scale: 7,
+            aggs: []
         }
     },
     mounted: async function() {
+        await this.fetch();
         await this.fetchJson();
         this.$nextTick(() => { this.mountMap(); });
     },
@@ -38,7 +36,7 @@ export default {
             this.map = new mapboxgl.Map({
                 container: 'map',
                 center: [ -105.477959, 39.116007 ],
-                zoom: 9,
+                zoom: 5.5,
                 projection: 'globe'
             });
 
@@ -60,9 +58,20 @@ export default {
                         'line-join': 'round'
                     },
                     'paint': {
-                        'line-opacity': 0.6,
-                        'line-color': 'rgb(53, 175, 109)',
-                        'line-width': 2
+                        'line-opacity': 0.5,
+                        'line-color': 'rgb(83, 83, 83)',
+                        'line-width': 0.5
+                    }
+                });
+
+                this.map.addLayer({
+                    'id': 'zipcodes-poly',
+                    'type': 'fill',
+                    'source': 'zipcodes',
+                    'source-layer': 'tl_2022_us_zcta520',
+                    'paint': {
+                        'fill-color': '#0080ff',
+                        'fill-opacity': this.aggs
                     }
                 });
             });
@@ -75,9 +84,30 @@ export default {
                 this.err = err;
             }
         },
-    },
-    components: {
-        Err
+        fetch: async function() {
+            try {
+                const agg = await window.std(`/api/aggregate/postalcode`);
+
+                let aggs = [];
+                let total = 0;
+                for (const name in agg) {
+                    total += agg[name];
+                    aggs.push({ name, count: agg[name] });
+                }
+
+                this.aggs = [ 'case' ]
+
+                for (const agg of aggs) {
+                    const percent = agg.count / total;
+                    this.aggs.push(['==', ['get', 'ZCTA5CE20'], agg.name]);
+                    this.aggs.push(percent);
+                }
+
+                this.aggs.push(0.05);
+            } catch (err) {
+                this.err = err;
+            }
+        }
     }
 }
 </script>
