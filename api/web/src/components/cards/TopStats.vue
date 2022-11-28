@@ -53,7 +53,7 @@
             </template>
             <template v-else>
                 <ApexChart
-                    :key='current'
+                    :key='random'
                     type='pie'
                     height='350'
                     :options='options'
@@ -78,6 +78,7 @@ export default {
     data: function() {
         return {
             agg: [],
+            random: '123',
             mode: 'list',
             current: 'Agency',
             series: [],
@@ -93,19 +94,19 @@ export default {
             }
         }
     },
-    watch: {
-        agg: function() {
+    mounted: function() {
+        this.fetch();
+    },
+    methods: {
+        genSeries: function() {
             this.options.labels = [];
             this.series = this.agg.map((a) => {
                 this.options.labels.push(a.name);
                 return a.percent * 100;
             });
-        }
-    },
-    mounted: function() {
-        this.fetch();
-    },
-    methods: {
+
+            this.random = (Math.random() + 1).toString(36).substring(7);
+        },
         fetch: async function(current) {
             if (this.current === current) return;
             if (current) this.current = current;
@@ -128,6 +129,8 @@ export default {
             }).sort((a, b) => {
                 return b.percent - a.percent;
             }).splice(0, 6);
+
+            this.genSeries();
         }
     },
     components: {
