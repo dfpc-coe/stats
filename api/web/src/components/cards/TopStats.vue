@@ -7,36 +7,53 @@
             <div class='ms-auto'>
                 <div class="btn-list">
                     <TablerSelect
+                        class='mt-1'
                         :default='current'
                         :values='["Category", "Agency", "SubAgency", "Title", "ZipCode"]'
                         @select='fetch($event)'
                     />
+
+                    <div class="btn-group" role="group">
+                        <input type="radio" id='top-stats-list' v-model='mode' value='list' class="btn-check"/>
+                        <label for='top-stats-list' class="btn btn-sm btn-icon">
+                            <ListIcon width='16'/>
+                        </label>
+                        <input type="radio" id='top-stats-pie' v-model='mode' value='pie' class="btn-check"/>
+                        <label for='top-stats-pie' class="btn btn-sm btn-icon">
+                            <ChartPieIcon width='16'/>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <table class="table card-table table-vcenter">
-                <thead>
-                    <tr>
-                        <th>User Group</th>
-                        <th colspan="2">Users</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr :key='a.name' v-for='a in agg'>
-                        <td v-text='a.name'></td>
-                        <td v-text='a.count'></td>
-                        <td class="w-50">
-                            <div class="progress progress-xs">
-                                <div
-                                    class="progress-bar bg-primary"
-                                    :style='`width: ${a.percent * 100}%;`'
-                                ></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <template v-if='mode === "list"'>
+                <table class="table card-table table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>User Group</th>
+                            <th colspan="2">Users</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr :key='a.name' v-for='a in agg'>
+                            <td v-text='a.name'></td>
+                            <td v-text='a.count'></td>
+                            <td class="w-50">
+                                <div class="progress progress-xs">
+                                    <div
+                                        class="progress-bar bg-primary"
+                                        :style='`width: ${a.percent * 100}%;`'
+                                    ></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+            <template v-else>
+                PIE CHART
+            </template>
         </div>
     </div>
 </div>
@@ -44,12 +61,17 @@
 
 <script>
 import { Select } from '@tak-ps/vue-tabler';
+import {
+    ChartPieIcon,
+    ListIcon
+} from 'vue-tabler-icons'
 
 export default {
     name: 'TopStats',
     data: function() {
         return {
             agg: {},
+            mode: 'pie',
             current: 'Agency',
             convert: {
                 Category: 'businesscategory',
@@ -89,7 +111,9 @@ export default {
         }
     },
     components: {
-        TablerSelect: Select
+        TablerSelect: Select,
+        ChartPieIcon,
+        ListIcon
     }
 }
 </script>
