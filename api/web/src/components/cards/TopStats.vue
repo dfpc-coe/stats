@@ -52,7 +52,13 @@
                 </table>
             </template>
             <template v-else>
-                PIE CHART
+                <ApexChart
+                    :key='current'
+                    type='pie'
+                    height='350'
+                    :options='options'
+                    :series='series'
+                />
             </template>
         </div>
     </div>
@@ -61,6 +67,7 @@
 
 <script>
 import { Select } from '@tak-ps/vue-tabler';
+import VueApexCharts from 'vue3-apexcharts'
 import {
     ChartPieIcon,
     ListIcon
@@ -70,9 +77,13 @@ export default {
     name: 'TopStats',
     data: function() {
         return {
-            agg: {},
-            mode: 'pie',
+            agg: [],
+            mode: 'list',
             current: 'Agency',
+            series: [],
+            options: {
+                labels: []
+            },
             convert: {
                 Category: 'businesscategory',
                 Agency: 'o',
@@ -80,6 +91,15 @@ export default {
                 Title: 'title',
                 ZipCode: 'postalcode'
             }
+        }
+    },
+    watch: {
+        agg: function() {
+            this.options.labels = [];
+            this.series = this.agg.map((a) => {
+                this.options.labels.push(a.name);
+                return a.percent * 100;
+            });
         }
     },
     mounted: function() {
@@ -112,6 +132,7 @@ export default {
     },
     components: {
         TablerSelect: Select,
+        ApexChart: VueApexCharts,
         ChartPieIcon,
         ListIcon
     }
