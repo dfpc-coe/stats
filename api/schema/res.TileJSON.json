@@ -21,7 +21,10 @@
             "type": "string" 
         },
         "tiles": {
-            "type": "array"
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         },
         "minzoom": {
             "type": "integer"
