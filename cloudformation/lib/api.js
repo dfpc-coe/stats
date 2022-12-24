@@ -90,88 +90,7 @@ export default {
                 Policies: [{
                     PolicyName: cf.join([cf.stackName, '-api-task']),
                     PolicyDocument: {
-                        Statement: [{
-                            Effect: 'Allow', // Encryption & Decryption of S3 Resources
-                            Action: [
-                                'kms:Decrypt',
-                                'kms:GenerateDataKey'
-                            ],
-                            Resource: [cf.getAtt('KMS', 'Arn')]
-                        },{
-                            Effect: 'Allow', // Uploading/Download of Rasters
-                            Action: [
-                                's3:*'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:s3:::', cf.ref('Bucket')]),
-                                cf.join(['arn:aws:s3:::', cf.ref('Bucket'), '/*'])
-                            ]
-                        },{
-                            Effect: 'Allow', // Password Reset & User Validation
-                            Action: [
-                                'ses:SendEmail'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:ses:', cf.region, ':', cf.accountId, ':identity/*'])
-                            ]
-                        },{
-                            Effect: 'Allow', // API Stack Secrets
-                            Action: [
-                                'secretsmanager:Describe*',
-                                'secretsmanager:Get*',
-                                'secretsmanager:List*'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:secretsmanager:', cf.region, ':', cf.accountId, ':secret:', cf.stackName, '/*'])
-                            ]
-                        },{
-                            Effect: 'Allow', // Upload Source Secrets
-                            Action: [
-                                'secretsmanager:Create*',
-                                'secretsmanager:Put*',
-                                'secretsmanager:Update*',
-                                'secretsmanager:Delete*',
-                                'secretsmanager:Restore*',
-                                'secretsmanager:Describe*',
-                                'secretsmanager:Get*',
-                                'secretsmanager:List*'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:secretsmanager:', cf.region, ':', cf.accountId, ':secret:', cf.stackName, '-*'])
-                            ]
-                        },{
-                            Effect: 'Allow', // Performing work on rasters
-                            Action: [
-                                'sqs:ChangeMessageVisibility',
-                                'sqs:DeleteMessage',
-                                'sqs:GetQueueAttributes',
-                                'sqs:GetQueueUrl',
-                                'sqs:ListDeadLetterSourceQueues',
-                                'sqs:PurgeQueue',
-                                'sqs:SendMessage'
-                            ],
-                            Resource: [
-                                cf.getAtt('Queue', 'Arn'),
-                                cf.getAtt('DeadQueue', 'Arn'),
-                                cf.getAtt('ObtainQueue', 'Arn'),
-                                cf.getAtt('TransformQueue', 'Arn')
-                            ]
-                        },{
-                            Effect: 'Allow', // Create events for scheduled uploads
-                            Action: [
-                                'events:PutRule',
-                                'events:DescribeRule',
-                                'events:ListRules',
-                                'events:PutTargets',
-                                'events:RemoveTargets',
-                                'events:DisableRule',
-                                'events:EnableRule',
-                                'events:DeleteRule'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:events:', cf.region, ':', cf.accountId, ':rule/', cf.stackName, '-*'])
-                            ]
-                        }]
+                        Statement: []
                     }
                 }]
             }
@@ -228,7 +147,7 @@ export default {
                 TaskRoleArn: cf.getAtt('TaskRole', 'Arn'),
                 ContainerDefinitions: [{
                     Name: 'api',
-                    Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/raster-uploader:', cf.ref('GitSha')]),
+                    Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/tak-ps-stats:', cf.ref('GitSha')]),
                     PortMappings: [{
                         ContainerPort: 5000
                     }],
@@ -236,14 +155,13 @@ export default {
                         {
                             Name: 'POSTGRES',
                             Value: cf.join([
-                                'postgresql://uploader',
+                                'postgresql://',
+                                cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:username:AWSCURRENT}}'),
                                 ':',
-                                cf.ref('DatabasePassword'),
+                                cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                                 '@',
                                 cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
-                                ':',
-                                cf.getAtt('DBInstanceVPC', 'Endpoint.Port'),
-                                '/uploader'
+                                ':5432/tak_ps_stats'
                             ])
                         },
                         { Name: 'StackName', Value: cf.stackName },

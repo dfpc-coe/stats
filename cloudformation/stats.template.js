@@ -14,11 +14,11 @@ export default cf.merge(
                 Description: 'VPC ID to deploy into',
                 Type: 'String'
             },
-            SubA: {
+            SubnetA: {
                 Description: 'VPC SubnetA to deploy into',
                 Type: 'String'
             },
-            SubB: {
+            SubnetB: {
                 Description: 'VPC SubnetB to deploy into',
                 Type: 'String'
             }
