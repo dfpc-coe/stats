@@ -1,19 +1,25 @@
 import cf from '@mapbox/cloudfriend';
-import S3 from './lib/s3.js';
-import VPC from './lib/vpc.js';
-import KMS from './lib/kms.js';
-import Batch from './lib/batch.js';
+import API from './lib/api.js';
 
 export default cf.merge(
-    S3,
-    VPC,
-    KMS,
-    Batch,
+    API,
     {
         Description: 'Template for @tak-ps/etl',
         Parameters: {
             GitSha: {
                 Description: 'GitSha that is currently being deployed',
+                Type: 'String'
+            },
+            VPC: {
+                Description: 'VPC ID to deploy into',
+                Type: 'String'
+            },
+            SubA: {
+                Description: 'VPC SubnetA to deploy into',
+                Type: 'String'
+            },
+            SubB: {
+                Description: 'VPC SubnetB to deploy into',
                 Type: 'String'
             }
         }
