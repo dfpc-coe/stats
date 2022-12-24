@@ -40,7 +40,7 @@ export default async function server(config) {
     });
 
     config.tb = new TileBase(config.TileBaseURL);
-    config.tb.open()
+    config.tb.open();
 
     const app = express();
 
