@@ -4,9 +4,44 @@
         "query": true,
         "res": true
     },
+    "GET /aggregate/:aggregate": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
+    "GET /field": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
+    "GET /field/export": {
+        "body": false,
+        "query": true,
+        "res": false
+    },
+    "GET /zipcodes": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
+    "GET /zipcodes/:z/:x/:y": {
+        "body": false,
+        "query": false,
+        "res": false
+    },
     "POST /record": {
         "body": true,
         "query": false,
         "res": true
+    },
+    "GET /total": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
+    "GET /total/export": {
+        "body": false,
+        "query": true,
+        "res": false
     }
 }
