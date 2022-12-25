@@ -2,3 +2,4 @@
 
 <p align=center>Aggregate stats from a TAK LDAP Instance</p>
 
+<img src='./doc/demo.png'></img>
