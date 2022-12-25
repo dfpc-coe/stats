@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: {{ github.event.pull_request.head.sha || github.sha }}
+          ref: {{github.event.pull_request.head.sha || github.sha}}
 
       - uses: actions/setup-node@v3
         with:
@@ -42,5 +42,3 @@ jobs:
 
       - name: Docker Cleanup
         run: docker-compose kill
-
-
