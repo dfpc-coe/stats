@@ -41,8 +41,8 @@ export default async function server(config) {
 
     try {
         config.tb = new TileBase(config.TileBaseURL);
-        config.tb.open();
-    } catch (Err) {
+        await config.tb.open();
+    } catch (err) {
         console.log('ok - Skipping TileBase');
     }
 
