@@ -37,7 +37,7 @@ jobs:
 
       - name: Docker API Test
         run: docker run --network stats_default
-          -e "Postgres=postgres://docker:docker@postgis:5432/gis"
+          -e "POSTGRES=postgres://docker:docker@postgis:5432/gis"
           stats_api:latest npm test
 
       - name: Docker Cleanup
