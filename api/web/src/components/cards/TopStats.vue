@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { Select } from '@tak-ps/vue-tabler';
+import { TablerSelect } from '@tak-ps/vue-tabler';
 import VueApexCharts from 'vue3-apexcharts'
 import {
     ChartPieIcon,
@@ -134,7 +134,7 @@ export default {
         }
     },
     components: {
-        TablerSelect: Select,
+        TablerSelect,
         ApexChart: VueApexCharts,
         ChartPieIcon,
         ListIcon

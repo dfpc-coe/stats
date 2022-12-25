@@ -35,7 +35,7 @@
 <script>
 import moment from 'moment';
 import VueApexCharts from 'vue3-apexcharts'
-import { Select } from '@tak-ps/vue-tabler';
+import { TablerSelect } from '@tak-ps/vue-tabler';
 
 export default {
     name: 'RegisteredCard',
@@ -106,7 +106,7 @@ export default {
         }
     },
     components: {
-        TablerSelect: Select,
+        TablerSelect,
         ApexChart: VueApexCharts
     }
 }
