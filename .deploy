@@ -1,5 +1,5 @@
 {
-    "profile": "labs",
+    "profile": "coe",
     "tags": [
         {
             "Key": "Project",
@@ -9,7 +9,8 @@
     ],
     "artifacts": {
         "docker": [
-            "{{project}}:api-{{gitsha}}"
+            "{{project}}:{{gitsha}}",
+            "{{project}}:etl-{{gitsha}}"
         ]
     }
 }
