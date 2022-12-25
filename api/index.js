@@ -39,8 +39,12 @@ export default async function server(config) {
         }
     });
 
-    config.tb = new TileBase(config.TileBaseURL);
-    config.tb.open();
+    try {
+        config.tb = new TileBase(config.TileBaseURL);
+        await config.tb.open();
+    } catch (err) {
+        console.log('ok - Skipping TileBase');
+    }
 
     const app = express();
 

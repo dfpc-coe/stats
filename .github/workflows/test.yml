@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
-    pull_request:
-      types:
-        - opened
-        - synchronize
-        - reopened
-        - ready_for_review
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   test:
@@ -30,15 +30,15 @@ jobs:
         run: docker-compose up --build -d postgis
 
       - name: Docker API Build
-        run: docker build -t api services/api
+        run: docker-compose build api
 
       - name: Docker API Lint
-        run: docker run api sh -c "npm install --include=dev && npm run lint"
+        run: docker run stats_api:latest sh -c "npm install --include=dev && npm run lint"
 
       - name: Docker API Test
         run: docker run --network stats_default
-          -e "Postgres=postgres://docker:docker@postgis:5432/gis"
-          api npm test
+          -e "POSTGRES=postgres://docker:docker@postgis:5432/gis"
+          stats_api:latest npm test
 
       - name: Docker Cleanup
         run: docker-compose kill
