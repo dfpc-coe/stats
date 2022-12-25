@@ -29,4 +29,5 @@ RUN cd web \
     && cd ..
 
 CMD service nginx restart \
+    && npx knex migrate:latest \
     && npm run start
