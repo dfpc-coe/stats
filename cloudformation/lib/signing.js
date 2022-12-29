@@ -13,6 +13,6 @@ export default {
                 Name: cf.join([cf.stackName, '/api/secret']),
                 KmsKeyId: cf.ref('KMS')
             }
-        },
+        }
     }
 };
