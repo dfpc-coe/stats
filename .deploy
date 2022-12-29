@@ -1,4 +1,5 @@
 {
+    "name": "coe-stats",
     "profile": "coe",
     "tags": [
         {
@@ -9,8 +10,8 @@
     ],
     "artifacts": {
         "docker": [
-            "{{project}}:{{gitsha}}",
-            "{{project}}:etl-{{gitsha}}"
+            "coe-ecr-stats:{{gitsha}}",
+            "coe-ecr-stats:etl-{{gitsha}}"
         ]
     }
 }
