@@ -1,8 +1,12 @@
 import cf from '@mapbox/cloudfriend';
 import API from './lib/api.js';
+import DB from './lib/db.js';
+import KMS from './lib/kms.js';
 
 export default cf.merge(
     API,
+    DB,
+    KMS,
     {
         Description: 'Template for @tak-ps/etl',
         Parameters: {

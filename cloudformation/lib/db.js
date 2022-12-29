@@ -31,11 +31,11 @@ export default {
             Type: 'AWS::SecretsManager::SecretTargetAttachment',
             Properties: {
                 SecretId: cf.ref('DBMasterSecret'),
-                TargetId: cf.ref('DBInstanceVPC'),
+                TargetId: cf.ref('DBInstance'),
                 TargetType: 'AWS::RDS::DBInstance'
             }
         },
-        DBInstanceVPC: {
+        DBInstance: {
             Type: 'AWS::RDS::DBInstance',
             DependsOn: ['DBMasterSecret'],
             Properties: {
@@ -75,7 +75,7 @@ export default {
                 VpcId: cf.ref('VPC'),
                 SecurityGroupIngress: [{
                     IpProtocol: '-1',
-                    SourceSecurityGroupId: cf.getAtt('APIServiceSecurityGroup', 'GroupId')
+                    SourceSecurityGroupId: cf.getAtt('ServiceSecurityGroup', 'GroupId')
                 },{
                     IpProtocol: '-1',
                     CidrIp: '0.0.0.0/0'
@@ -92,7 +92,7 @@ export default {
                 ':',
                 cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                 '@',
-                cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
+                cf.getAtt('DBInstance', 'Endpoint.Address'),
                 ':5432/tak_ps_stats'
             ])
         }

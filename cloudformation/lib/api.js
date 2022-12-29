@@ -16,8 +16,8 @@ export default {
                 Type: 'application',
                 SecurityGroups: [cf.ref('ELBSecurityGroup')],
                 Subnets:  [
-                    cf.ref('SubA'),
-                    cf.ref('SubB')
+                    cf.ref('SubnetA'),
+                    cf.ref('SubnetB')
                 ]
             }
 
@@ -86,13 +86,7 @@ export default {
                         },
                         Action: 'sts:AssumeRole'
                     }]
-                },
-                Policies: [{
-                    PolicyName: cf.join([cf.stackName, '-api-task']),
-                    PolicyDocument: {
-                        Statement: []
-                    }
-                }]
+                }
             }
         },
         ExecRole: {
@@ -133,6 +127,7 @@ export default {
         },
         TaskDefinition: {
             Type: 'AWS::ECS::TaskDefinition',
+            DependsOn: ['DBInstance'],
             Properties: {
                 Family: cf.stackName,
                 Cpu: 1024,
@@ -160,10 +155,11 @@ export default {
                                 ':',
                                 cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                                 '@',
-                                cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
+                                cf.getAtt('DBInstance', 'Endpoint.Address'),
                                 ':5432/tak_ps_stats'
                             ])
                         },
+                        { Name: 'SigningSecret', Value: cf.ref('SigningSecret') },
                         { Name: 'StackName', Value: cf.stackName },
                         { Name: 'AWS_DEFAULT_REGION', Value: cf.region }
                     ],
@@ -194,8 +190,8 @@ export default {
                         AssignPublicIp: 'ENABLED',
                         SecurityGroups: [cf.ref('ServiceSecurityGroup')],
                         Subnets:  [
-                            cf.ref('SubA'),
-                            cf.ref('SubB')
+                            cf.ref('SubnetA'),
+                            cf.ref('SubnetB')
                         ]
                     }
                 },
