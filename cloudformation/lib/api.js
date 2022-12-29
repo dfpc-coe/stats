@@ -16,8 +16,8 @@ export default {
                 Type: 'application',
                 SecurityGroups: [cf.ref('ELBSecurityGroup')],
                 Subnets:  [
-                    cf.ref('SubnetA'),
-                    cf.ref('SubnetB')
+                    cf.ref('SubnetPublicA'),
+                    cf.ref('SubnetPublicB')
                 ]
             }
 
@@ -159,6 +159,7 @@ export default {
                                 ':5432/tak_ps_stats'
                             ])
                         },
+                        { Name: 'TileBaseURL', value: cf.join(['s3://', cf.ref('TileBaseS3'), '/zipcodes.tilebase']) },
                         { Name: 'SigningSecret', Value: cf.ref('SigningSecret') },
                         { Name: 'StackName', Value: cf.stackName },
                         { Name: 'AWS_DEFAULT_REGION', Value: cf.region }
@@ -190,8 +191,8 @@ export default {
                         AssignPublicIp: 'ENABLED',
                         SecurityGroups: [cf.ref('ServiceSecurityGroup')],
                         Subnets:  [
-                            cf.ref('SubnetA'),
-                            cf.ref('SubnetB')
+                            cf.ref('SubnetPublicA'),
+                            cf.ref('SubnetPublicB')
                         ]
                     }
                 },
@@ -214,6 +215,12 @@ export default {
                     ToPort: 5000
                 }]
             }
+        }
+    },
+    Outputs: {
+        API: {
+            Description: 'API ELB',
+            Value: cf.getAtt('ELB', 'DNSName')
         }
     }
 };

@@ -2,11 +2,15 @@ import cf from '@mapbox/cloudfriend';
 import API from './lib/api.js';
 import DB from './lib/db.js';
 import KMS from './lib/kms.js';
+import S3 from './lib/s3.js';
+import Secret from './lib/signing.js';
 
 export default cf.merge(
     API,
+    S3,
     DB,
     KMS,
+    Secret,
     {
         Description: 'Template for @tak-ps/etl',
         Parameters: {
@@ -18,12 +22,20 @@ export default cf.merge(
                 Description: 'VPC ID to deploy into',
                 Type: 'String'
             },
-            SubnetA: {
-                Description: 'VPC SubnetA to deploy into',
+            SubnetPublicA: {
+                Description: 'VPC SubnetPublicA to deploy into',
                 Type: 'String'
             },
-            SubnetB: {
-                Description: 'VPC SubnetB to deploy into',
+            SubnetPublicB: {
+                Description: 'VPC SubnetPublicB to deploy into',
+                Type: 'String'
+            },
+            SubnetPrivateA: {
+                Description: 'VPC SubnetPrivateA to deploy into',
+                Type: 'String'
+            },
+            SubnetPrivateB: {
+                Description: 'VPC SubnetPrivateB to deploy into',
                 Type: 'String'
             }
         }

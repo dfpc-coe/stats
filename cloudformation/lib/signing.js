@@ -14,4 +14,5 @@ export default {
                 KmsKeyId: cf.ref('KMS')
             }
         },
+    }
 };

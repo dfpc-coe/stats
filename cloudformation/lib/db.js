@@ -43,7 +43,7 @@ export default {
                 DBName: 'tak_ps_stats',
                 DBInstanceIdentifier: cf.stackName,
                 KmsKeyId: cf.ref('KMS'),
-                EngineVersion: '13.7',
+                EngineVersion: '14.5',
                 StorageEncrypted: true,
                 MasterUsername: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:username:AWSCURRENT}}'),
                 MasterUserPassword: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
@@ -63,8 +63,8 @@ export default {
             Properties: {
                 DBSubnetGroupDescription: cf.join('-', [cf.stackName, 'rds-subnets']),
                 SubnetIds: [
-                    cf.ref('SubnetA'),
-                    cf.ref('SubnetB')
+                    cf.ref('SubnetPrivateA'),
+                    cf.ref('SubnetPrivateB')
                 ]
             }
         },
