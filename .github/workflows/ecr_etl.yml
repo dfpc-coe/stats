@@ -35,7 +35,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Docker Tag ETL
-        run: docker tag etl ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com/tak_ps_stats:etl-${{github.event.pull_request.head.sha || github.sha}}
+        run: docker tag etl ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com/coe-ecr-stats:etl-${{github.event.pull_request.head.sha || github.sha}}
 
       - name: Docker Push ETL
-        run: docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com/tak_os_stats:etl-${{github.event.pull_request.head.sha || github.sha}}
+        run: docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com/coe-ecr-stats:etl-${{github.event.pull_request.head.sha || github.sha}}
