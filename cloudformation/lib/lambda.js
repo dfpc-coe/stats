@@ -32,6 +32,12 @@ export default {
                 Timeout: 60,
                 Description: 'Scrape LDAP for user stats',
                 PackageType: 'Image',
+                Environment: {
+                    Variables: {
+                        TAK_STATS_API: cf.join(['http://', cf.getAtt('ELB', 'DNSName')]),
+                        TAK_STATS_TOKEN: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/api/secret:SecretString::AWSCURRENT}}')
+                    }
+                },
                 Role: cf.getAtt('ETLFunctionRole', 'Arn'),
                 Code: {
                     ImageUri: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/coe-ecr-stats:etl-', cf.ref('GitSha')]),
