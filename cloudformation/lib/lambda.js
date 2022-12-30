@@ -14,12 +14,6 @@ export default {
                 Role: cf.getAtt('ETLFunctionRole', 'Arn'),
                 Code: {
                     ImageUri: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/coe-ecr-stats:etl-', cf.ref('GitSha')]),
-                },
-                VpcConfig: {
-                    SubnetIds: [
-                        cf.ref('SubnetPublicA'),
-                        cf.ref('SubnetPublicB')
-                    ]
                 }
             }
         },
