@@ -56,5 +56,5 @@ export default cf.merge(
         loadbalancer: cf.getAtt('ELB', 'LoadBalancerFullName'),
         targetgroup: cf.getAtt('TargetGroup', 'TargetGroupFullName')
 
-    }),
+    })
 );
