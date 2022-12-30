@@ -3,10 +3,10 @@ import cf from '@mapbox/cloudfriend';
 export default {
     Resources: {
         ETLEvents: {
-            Type: "AWS::Events::Rule",
+            Type: 'AWS::Events::Rule',
             Properties: {
                 Description: cf.stackName,
-                State: "ENABLED",
+                State: 'ENABLED',
                 ScheduleExpression: 'cron(0 22 * * ? *)',
                 Targets: [{
                     Id: 'TagWatcherScheduler',
@@ -18,8 +18,8 @@ export default {
             Type: 'AWS::Lambda::Permission',
             Properties: {
                 FunctionName: cf.getAtt('ETLFunction', 'Arn'),
-                Action: "lambda:InvokeFunction",
-                Principal: "events.amazonaws.com",
+                Action: 'lambda:InvokeFunction',
+                Principal: 'events.amazonaws.com',
                 SourceArn: cf.getAtt('ETLEvents', 'Arn')
             }
         },
@@ -40,7 +40,7 @@ export default {
                 },
                 Role: cf.getAtt('ETLFunctionRole', 'Arn'),
                 Code: {
-                    ImageUri: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/coe-ecr-stats:etl-', cf.ref('GitSha')]),
+                    ImageUri: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/coe-ecr-stats:etl-', cf.ref('GitSha')])
                 }
             }
         },
