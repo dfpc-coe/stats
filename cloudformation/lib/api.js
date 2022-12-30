@@ -160,7 +160,7 @@ export default {
                             ])
                         },
                         { Name: 'TileBaseURL', value: cf.join(['s3://', cf.ref('TileBaseS3'), '/zipcodes.tilebase']) },
-                        { Name: 'SigningSecret', Value: cf.ref('SigningSecret') },
+                        { Name: 'SigningSecret', Value: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/api/secret:SecretString::AWSCURRENT}}') },
                         { Name: 'StackName', Value: cf.stackName },
                         { Name: 'AWS_DEFAULT_REGION', Value: cf.region }
                     ],

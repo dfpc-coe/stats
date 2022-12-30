@@ -4,6 +4,7 @@ import DB from './lib/db.js';
 import KMS from './lib/kms.js';
 import S3 from './lib/s3.js';
 import Secret from './lib/signing.js';
+import Lambda from './lib/lambda.js';
 
 export default cf.merge(
     API,
@@ -11,6 +12,7 @@ export default cf.merge(
     DB,
     KMS,
     Secret,
+    Lambda,
     {
         Description: 'Template for @tak-ps/etl',
         Parameters: {
