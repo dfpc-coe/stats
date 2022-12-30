@@ -2,6 +2,27 @@ import cf from '@mapbox/cloudfriend';
 
 export default {
     Resources: {
+        ETLEvents: {
+            Type: "AWS::Events::Rule",
+            Properties: {
+                Description: cf.stackName,
+                State: "ENABLED",
+                ScheduleExpression: 'cron(0 22 * * ? *)',
+                Targets: [{
+                    Id: 'TagWatcherScheduler',
+                    Arn: cf.getAtt('ETLFunction', 'Arn')
+                }]
+            }
+        },
+        ETLFunctionInvoke: {
+            Type: 'AWS::Lambda::Permission',
+            Properties: {
+                FunctionName: cf.getAtt('ETLFunction', 'Arn'),
+                Action: "lambda:InvokeFunction",
+                Principal: "events.amazonaws.com",
+                SourceArn: cf.getAtt('ETLEvents', 'Arn')
+            }
+        },
         ETLFunction: {
             Type: 'AWS::Lambda::Function',
             Properties: {
