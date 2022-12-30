@@ -5,6 +5,7 @@ import KMS from './lib/kms.js';
 import S3 from './lib/s3.js';
 import Secret from './lib/signing.js';
 import Lambda from './lib/lambda.js';
+import alarms from '@openaddresses/batch-alarms';
 
 export default cf.merge(
     API,
@@ -19,6 +20,10 @@ export default cf.merge(
             GitSha: {
                 Description: 'GitSha that is currently being deployed',
                 Type: 'String'
+            },
+            AlarmEmail: {
+                Type: 'String',
+                Description: 'Email to send alarms to'
             },
             VPC: {
                 Description: 'VPC ID to deploy into',
@@ -41,5 +46,15 @@ export default cf.merge(
                 Type: 'String'
             }
         }
-    }
+    },
+    alarms({
+        prefix: 'Batch',
+        email: cf.ref('AlarmEmail'),
+        apache: cf.stackName,
+        cluster: cf.ref('ECSCluster'),
+        service: cf.getAtt('Service', 'Name'),
+        loadbalancer: cf.getAtt('ELB', 'LoadBalancerFullName'),
+        targetgroup: cf.getAtt('TargetGroup', 'TargetGroupFullName')
+
+    }),
 );
