@@ -22,7 +22,7 @@
     },
     "homepage": "https://github.com/tak-ps/stats#readme",
     "dependencies": {
-        "@tak-ps/blueprint-login": "^0.0.1",
+        "@tak-ps/blueprint-login": "^0.1.0",
         "@openaddresses/batch-error": "^1.1.0",
         "@openaddresses/batch-generic": "^13.0.1",
         "@openaddresses/batch-schema": "^7.5.0",

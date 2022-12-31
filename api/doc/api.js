@@ -18,6 +18,24 @@
 
 
 /**
+* @api {get} /login Get Login
+* @apiVersion 1.0.0
+* @apiName GET-/login
+* @apiGroup Login
+* @apiPermission Unknown
+*
+* @apidescription
+*   No Description
+*
+
+*
+*
+*
+*
+*/
+
+
+/**
 * @api {get} /schema GET /schema
 * @apiVersion 1.0.0
 * @apiName GET-/schema
