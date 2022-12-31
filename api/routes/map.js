@@ -1,4 +1,5 @@
 import Err from '@openaddresses/batch-error';
+import Auth from '../lib/auth.js';
 
 export default async function router(schema, config) {
     await schema.get('/zipcodes', {
@@ -9,6 +10,8 @@ export default async function router(schema, config) {
         res: 'res.TileJSON.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
+
             if (!config.tb.isopen) throw new Err(400, null, 'Map Backend has not initiated');
 
             return res.json(config.tb.tilejson());
@@ -27,6 +30,8 @@ export default async function router(schema, config) {
         ':y': 'integer'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
+
             if (!config.tb.isopen) throw new Err(400, null, 'Map Backend has not initiated');
 
             const encodings = req.headers['accept-encoding'].split(',').map((e) => e.trim());

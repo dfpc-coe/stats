@@ -43,7 +43,7 @@ export default {
     },
     watch: {
         async $route() {
-            if (localStorage.token) return await this.getSelf();
+            if (localStorage.token) return await this.getLogin();
             if (this.$route.name !== 'login') this.$router.push("/login");
         }
     },
