@@ -19,7 +19,6 @@ export default {
     name: 'LocationCard',
     data: function() {
         return {
-            err: false,
             tilejson: {},
             map: false,
             aggs: []
@@ -77,36 +76,28 @@ export default {
             });
         },
         fetchJson: async function() {
-            try {
-                this.tilejson = await window.std('/api/zipcodes');
-                this.tilejson.tiles.push(String(window.stdurl('/api/zipcodes')) + '/{z}/{x}/{y}');
-            } catch (err) {
-                this.err = err;
-            }
+            this.tilejson = await window.std('/api/zipcodes');
+            this.tilejson.tiles.push(String(window.stdurl('/api/zipcodes')) + '/{z}/{x}/{y}');
         },
         fetch: async function() {
-            try {
-                const agg = await window.std(`/api/aggregate/postalcode`);
+            const agg = await window.std(`/api/aggregate/postalcode`);
 
-                let aggs = [];
-                let total = 0;
-                for (const name in agg) {
-                    total += agg[name];
-                    aggs.push({ name, count: agg[name] });
-                }
-
-                this.aggs = [ 'case' ]
-
-                for (const agg of aggs) {
-                    const percent = agg.count / total;
-                    this.aggs.push(['==', ['get', 'ZCTA5CE20'], agg.name]);
-                    this.aggs.push(percent);
-                }
-
-                this.aggs.push(0.05);
-            } catch (err) {
-                this.err = err;
+            let aggs = [];
+            let total = 0;
+            for (const name in agg) {
+                total += agg[name];
+                aggs.push({ name, count: agg[name] });
             }
+
+            this.aggs = [ 'case' ]
+
+            for (const agg of aggs) {
+                const percent = agg.count / total;
+                this.aggs.push(['==', ['get', 'ZCTA5CE20'], agg.name]);
+                this.aggs.push(percent);
+            }
+
+            this.aggs.push(0.05);
         }
     }
 }

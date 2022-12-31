@@ -94,8 +94,8 @@ export default {
             }
         }
     },
-    mounted: function() {
-        this.fetch();
+    mounted: async function() {
+        await this.fetch();
     },
     methods: {
         genSeries: function() {

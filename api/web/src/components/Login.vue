@@ -15,7 +15,7 @@
                                 <label class="form-label">
                                     Password
                                     <span class="form-label-description">
-                                        <a href="./forgot-password.html">Forgot Password</a>
+                                        <!--<a href="./forgot-password.html">Forgot Password</a>-->
                                     </span>
                                 </label>
                                 <div class="input-group input-group-flat">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="text-center text-muted mt-3">
-                        Don't have account yet? <a href='mailto:rescue@ingalls.ca'>Contact Us</a>
+                        <!--Don't have account yet? <a href='mailto:rescue@ingalls.ca'>Contact Us</a>-->
                     </div>
                 </div>
             </div>
