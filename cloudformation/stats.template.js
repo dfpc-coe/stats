@@ -25,6 +25,14 @@ export default cf.merge(
                 Type: 'String',
                 Description: 'Email to send alarms to'
             },
+            Username: {
+                Type: 'String',
+                Description: 'Temporary Username until LDAP lands'
+            },
+            Password: {
+                Type: 'String',
+                Description: 'Temporary Password until LDAP lands'
+            },
             VPC: {
                 Description: 'VPC ID to deploy into',
                 Type: 'String'
