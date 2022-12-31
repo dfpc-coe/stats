@@ -83,7 +83,11 @@ export default async function server(config) {
     app.use('/api', schema.router);
     app.use('/docs', express.static('./doc'));
 
-    await schema.blueprint(new BlueprintLogin());
+    await schema.blueprint(new BlueprintLogin({
+        secret: config.SigningSecret,
+        username: config.Username,
+        password: config.Password
+    }));
 
     await schema.api();
 

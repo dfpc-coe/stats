@@ -1,5 +1,23 @@
 
 /**
+* @api {post} /login Create Login
+* @apiVersion 1.0.0
+* @apiName POST-/login
+* @apiGroup Login
+* @apiPermission Unknown
+*
+* @apidescription
+*   No Description
+*
+
+*
+*
+*
+*
+*/
+
+
+/**
 * @api {get} /schema GET /schema
 * @apiVersion 1.0.0
 * @apiName GET-/schema
