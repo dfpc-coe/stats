@@ -6,6 +6,7 @@ const flight = new Flight();
 
 flight.init(test);
 flight.takeoff(test);
+flight.user(test);
 
 test('POST: api/record - no auth', async (t) => {
     try {
@@ -36,10 +37,10 @@ test('POST: api/record - no auth', async (t) => {
             }
         }, false);
 
-        t.equal(res.status, 401, 'http: 401');
+        t.equal(res.status, 403, 'http: 401');
         t.deepEqual(res.body, {
-            status: 401,
-            message: 'Unauthorized',
+            status: 403,
+            message: 'Authentication Required',
             messages: []
         });
     } catch (err) {
@@ -115,7 +116,9 @@ test('POST: api/record - success', async (t) => {
 
             await flight.fetch('/api/record', {
                 method: 'POST',
-                headers: { authorization: 'bearer coe-wildland-fire' },
+                auth: {
+                    bearer: flight.token.admin
+                },
                 body
             }, true);
         }
