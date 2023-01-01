@@ -83,13 +83,13 @@ export default async function server(config) {
     app.use('/api', schema.router);
     app.use('/docs', express.static('./doc'));
 
+    await schema.api();
+
     await schema.blueprint(new BlueprintLogin({
         secret: config.SigningSecret,
         username: config.Username,
         password: config.Password
     }));
-
-    await schema.api();
 
     await schema.load(
         new URL('./routes/', import.meta.url),
