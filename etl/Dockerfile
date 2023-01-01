@@ -5,4 +5,4 @@ ADD . /usr/local/src/etl
 
 RUN npm install
 
-CMD node index.js
+CMD index.handler

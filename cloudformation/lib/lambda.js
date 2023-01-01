@@ -2,6 +2,13 @@ import cf from '@mapbox/cloudfriend';
 
 export default {
     Resources: {
+        ETLFunctionLogs: {
+            Type: 'AWS::Logs::LogGroup',
+            Properties: {
+                LogGroupName: cf.join(['/aws/lambda/', cf.stackName, '-etl']),
+                RetentionInDays: 7
+            }
+        },
         ETLEvents: {
             Type: 'AWS::Events::Rule',
             Properties: {
@@ -62,7 +69,10 @@ export default {
                     }]
                 },
                 Path: '/',
-                Policies: []
+                Policies: [],
+                ManagedPolicyArns: [
+                     'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+                ]
             }
         }
     }
