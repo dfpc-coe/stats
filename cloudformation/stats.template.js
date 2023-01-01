@@ -21,6 +21,18 @@ export default cf.merge(
                 Description: 'GitSha that is currently being deployed',
                 Type: 'String'
             },
+            LDAPServer: {
+                Type: 'String',
+                Description: 'URL to LDAP Server'
+            },
+            LDAPUsername: {
+                Type: 'String',
+                Description: 'Username to LDAP Service'
+            },
+            LDAPPassword: {
+                Type: 'String',
+                Description: 'Password to LDAP Service'
+            },
             AlarmEmail: {
                 Type: 'String',
                 Description: 'Email to send alarms to'
