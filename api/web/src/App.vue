@@ -30,12 +30,16 @@ import '@tabler/core/dist/css/tabler.min.css';
 import {
     CodeIcon,
 } from 'vue-tabler-icons';
+import {
+    TablerError
+} from '@tak-ps/vue-tabler';
 
 export default {
     name: 'Tak-PS-Stats',
     data: function() {
         return {
-            err: false,
+            user: null,
+            err: null,
         }
     },
     errorCaptured: function(err) {
@@ -62,7 +66,8 @@ export default {
         }
     },
     components: {
-        CodeIcon
+        CodeIcon,
+        TablerError
     }
 }
 </script>
