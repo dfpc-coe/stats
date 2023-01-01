@@ -71,7 +71,7 @@ export default {
                 Path: '/',
                 Policies: [],
                 ManagedPolicyArns: [
-                     'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+                    'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
                 ]
             }
         }
