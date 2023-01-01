@@ -2,6 +2,7 @@ import Err from '@openaddresses/batch-error';
 import Field from '../lib/types/field.js';
 import { Schema } from '@openaddresses/batch-generic';
 import { stringify } from '../node_modules/csv-stringify/lib/sync.js';
+import Auth from '../lib/auth.js';
 
 export default async function router(schema, config) {
     await schema.get('/field', {
@@ -12,6 +13,8 @@ export default async function router(schema, config) {
         res: 'res.ListField.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
+
             const list = await Field.list(config.pool);
             return res.json(list);
         } catch (err) {
@@ -27,6 +30,8 @@ export default async function router(schema, config) {
         query: 'req.query.ExportField.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
+
             const cols = Object.keys(Schema.from(config.pool, Field).properties);
 
             res.header('Content-Disposition', `attachment; filename="tak-fields.${req.query.format}"`);

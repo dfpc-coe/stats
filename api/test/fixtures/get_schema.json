@@ -1,4 +1,14 @@
 {
+    "POST /login": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
+    "GET /login": {
+        "body": false,
+        "query": false,
+        "res": true
+    },
     "GET /schema": {
         "body": false,
         "query": true,

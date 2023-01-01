@@ -2,6 +2,7 @@ import Err from '@openaddresses/batch-error';
 import Total from '../lib/types/total.js';
 import { Schema } from '@openaddresses/batch-generic';
 import { stringify } from '../node_modules/csv-stringify/lib/sync.js';
+import Auth from '../lib/auth.js';
 
 export default async function router(schema, config) {
     await schema.get('/total', {
@@ -12,6 +13,7 @@ export default async function router(schema, config) {
         res: 'res.ListTotal.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
             const list = await Total.list(config.pool, req.query);
             return res.json(list);
         } catch (err) {
@@ -27,6 +29,7 @@ export default async function router(schema, config) {
         query: 'req.query.ExportTotal.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
             const cols = Object.keys(Schema.from(config.pool, Total).properties);
 
             res.header('Content-Disposition', `attachment; filename="tak-total-users.${req.query.format}"`);

@@ -19,6 +19,8 @@
     </header>
 
     <router-view/>
+
+    <TablerError v-if='err' :err='err' @close='err = null'/>
 </div>
 </template>
 
@@ -28,16 +30,44 @@ import '@tabler/core/dist/css/tabler.min.css';
 import {
     CodeIcon,
 } from 'vue-tabler-icons';
+import {
+    TablerError
+} from '@tak-ps/vue-tabler';
 
 export default {
     name: 'Tak-PS-Stats',
     data: function() {
         return {
-            err: false,
+            user: null,
+            err: null,
+        }
+    },
+    errorCaptured: function(err) {
+        this.err = err;
+    },
+    watch: {
+        async $route() {
+            if (localStorage.token) return await this.getLogin();
+            if (this.$route.name !== 'login') this.$router.push("/login");
+        }
+    },
+    mounted: async function() {
+        if (localStorage.token) return await this.getLogin();
+        if (this.$route.name !== 'login') this.$router.push("/login");
+    },
+    methods: {
+        getLogin: async function() {
+            try {
+                this.user = await window.std('/api/login');
+            } catch (err) {
+                delete localStorage.token;
+                this.$router.push("/login");
+            }
         }
     },
     components: {
-        CodeIcon
+        CodeIcon,
+        TablerError
     }
 }
 </script>

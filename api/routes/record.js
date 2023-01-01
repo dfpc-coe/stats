@@ -2,6 +2,7 @@ import Err from '@openaddresses/batch-error';
 import moment from 'moment';
 import Total from '../lib/types/total.js';
 import Field from '../lib/types/field.js';
+import Auth from '../lib/auth.js';
 
 export default async function router(schema, config) {
     await schema.post('/record', {
@@ -13,7 +14,9 @@ export default async function router(schema, config) {
         res: 'res.Standard.json'
     }, async (req, res) => {
         try {
-            if (!req.auth || req.auth.access !== 'machine') {
+            await Auth.is_auth(req);
+
+            if (req.auth.access !== 'machine') {
                 throw new Err(401, null, 'Unauthorized');
             }
 

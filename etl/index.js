@@ -4,7 +4,7 @@ import { Writable } from 'stream';
 import { pipeline } from 'node:stream/promises';
 import fs from 'fs';
 
-const SERVER = process.env.server || 'https://auth.cotak.gov/';
+const SERVER = process.env.LDAP_SERVER || 'https://auth.cotak.gov/';
 const USERNAME = process.env.LDAP_USERNAME;
 const PASSWORD = process.env.LDAP_PASSWORD;
 

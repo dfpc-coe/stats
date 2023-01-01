@@ -1,5 +1,6 @@
 import Err from '@openaddresses/batch-error';
 import Field from '../lib/types/field.js';
+import Auth from '../lib/auth.js';
 
 export default async function router(schema, config) {
     await schema.get('/aggregate/:aggregate', {
@@ -11,6 +12,8 @@ export default async function router(schema, config) {
         res: 'res.Aggregate.json'
     }, async (req, res) => {
         try {
+            await Auth.is_auth(req);
+
             const agg = await Field.aggregate(config.pool, req.params.aggregate);
 
             return res.json(agg);
