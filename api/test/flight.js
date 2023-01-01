@@ -1,7 +1,6 @@
 process.env.StackName = 'test';
 
 import assert from 'assert';
-import { sql } from 'slonik';
 import fs from 'fs';
 import api from '../index.js';
 import Config from '../lib/config.js';
@@ -228,7 +227,7 @@ export default class Flight {
      * @param {Object} test Tape runner
      */
     user(test) {
-        test.test(`Create Token: admin`, async (t) => {
+        test.test('Create Token: admin', async (t) => {
             const new_login_res = await fetch(new URL('/api/login', this.base), {
                 method: 'POST',
                 headers: {

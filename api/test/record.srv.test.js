@@ -1,12 +1,12 @@
 import test from 'tape';
 import Flight from './flight.js';
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 
 const flight = new Flight();
 
 flight.init(test);
 flight.takeoff(test);
-flight.user(test);
 
 test('POST: api/record - no auth', async (t) => {
     try {
@@ -117,7 +117,7 @@ test('POST: api/record - success', async (t) => {
             await flight.fetch('/api/record', {
                 method: 'POST',
                 auth: {
-                    bearer: flight.token.admin
+                    bearer: jwt.sign({ access: 'machine' }, 'coe-wildland-fire')
                 },
                 body
             }, true);
