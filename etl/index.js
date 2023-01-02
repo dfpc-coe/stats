@@ -46,7 +46,7 @@ export async function handler() {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
-                        authorization: `bearer ${TOKEN}`
+                        authorization: `bearer ${jwt.sign({ access: 'machine' }, TOKEN)}`
                     },
                     body: JSON.stringify(stats)
                 });
