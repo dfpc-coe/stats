@@ -1,7 +1,6 @@
 import fetcher from './lib/fetch.js';
 import csv from 'csv-parser';
-import { Writable } from 'stream';
-import { pipeline } from 'node:stream/promises';
+import jwt from 'jsonwebtoken';
 import fs from 'fs';
 
 const SERVER = process.env.LDAP_SERVER || 'https://auth.cotak.gov/';
@@ -17,7 +16,7 @@ export async function handler() {
     const types = ['businesscategory', 'o', 'ou', 'postalcode', 'title'];
 
     const stats = {
-        count: 0,
+        count: 0
     };
 
     for (const type of types) {
@@ -53,7 +52,7 @@ export async function handler() {
 
                 if (record.status !== 200) {
                     const text = await record.text();
-                    return reject(new Error(text))
+                    return reject(new Error(text));
                 } else {
                     console.error('ok - results posted');
                     return resolve();

@@ -6,7 +6,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint index.js lib/*.js"
     },
     "author": "",
     "license": "ISC",
@@ -14,5 +15,9 @@
         "csv-parser": "^3.0.0",
         "fetch-cookie": "^2.1.0",
         "jsonwebtoken": "^9.0.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.31.0",
+        "eslint-plugin-node": "^11.1.0"
     }
 }
