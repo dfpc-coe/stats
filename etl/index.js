@@ -11,7 +11,7 @@ const PASSWORD = process.env.LDAP_PASSWORD;
 const API = process.env.TAK_STATS_API || 'http://localhost:4999';
 const TOKEN = process.env.TAK_STATS_TOKEN || 'coe-wildland-fire';
 
-async function handler() {
+export async function handler() {
     const csvpath = await fetcher(SERVER, USERNAME, PASSWORD);
 
     const types = ['businesscategory', 'o', 'ou', 'postalcode', 'title'];
