@@ -43,9 +43,9 @@ export default {
                     Variables: {
                         TAK_STATS_API: cf.join(['http://', cf.getAtt('ELB', 'DNSName')]),
                         TAK_STATS_TOKEN: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/api/secret:SecretString::AWSCURRENT}}'),
-                        LDAP_Server: cf.ref('LDAPUsername'),
-                        LDAP_Username: cf.ref('LDAPUsername'),
-                        LDAP_Password: cf.ref('LDAPPassword')
+                        LDAP_SERVER: cf.ref('LDAPServer'),
+                        LDAP_USERNAME: cf.ref('LDAPUsername'),
+                        LDAP_PASSWORD: cf.ref('LDAPPassword')
                     }
                 },
                 Role: cf.getAtt('ETLFunctionRole', 'Arn'),
