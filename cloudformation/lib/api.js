@@ -86,7 +86,21 @@ export default {
                         },
                         Action: 'sts:AssumeRole'
                     }]
-                }
+                },
+                Policies: [{
+                    PolicyName: cf.join([cf.stackName, '-api-logging']),
+                    PolicyDocument: {
+                        Statement: [{
+                            Effect: 'Allow',
+                            Resource: [
+                                cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3')]),
+                                cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3'), '/*'])
+                            ],
+                            Action: [ "s3:Get*", "s3:List*" ]
+
+                        }]
+                    }
+                }],
             }
         },
         ExecRole: {
