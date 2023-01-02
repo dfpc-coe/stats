@@ -2,6 +2,13 @@ import cf from '@mapbox/cloudfriend';
 
 export default {
     Resources: {
+        ETLFunctionLogs: {
+            Type: 'AWS::Logs::LogGroup',
+            Properties: {
+                LogGroupName: cf.join(['/aws/lambda/', cf.stackName, '-etl']),
+                RetentionInDays: 7
+            }
+        },
         ETLEvents: {
             Type: 'AWS::Events::Rule',
             Properties: {
@@ -36,9 +43,9 @@ export default {
                     Variables: {
                         TAK_STATS_API: cf.join(['http://', cf.getAtt('ELB', 'DNSName')]),
                         TAK_STATS_TOKEN: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/api/secret:SecretString::AWSCURRENT}}'),
-                        LDAP_Server: cf.ref('LDAPUsername'),
-                        LDAP_Username: cf.ref('LDAPUsername'),
-                        LDAP_Password: cf.ref('LDAPPassword')
+                        LDAP_SERVER: cf.ref('LDAPServer'),
+                        LDAP_USERNAME: cf.ref('LDAPUsername'),
+                        LDAP_PASSWORD: cf.ref('LDAPPassword')
                     }
                 },
                 Role: cf.getAtt('ETLFunctionRole', 'Arn'),
@@ -62,7 +69,10 @@ export default {
                     }]
                 },
                 Path: '/',
-                Policies: []
+                Policies: [],
+                ManagedPolicyArns: [
+                    'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+                ]
             }
         }
     }
