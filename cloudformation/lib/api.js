@@ -96,11 +96,11 @@ export default {
                                 cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3')]),
                                 cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3'), '/*'])
                             ],
-                            Action: [ "s3:Get*", "s3:List*" ]
+                            Action: ['s3:Get*', 's3:List*']
 
                         }]
                     }
-                }],
+                }]
             }
         },
         ExecRole: {
