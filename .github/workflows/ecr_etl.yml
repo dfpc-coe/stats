@@ -38,4 +38,4 @@ jobs:
         run: docker tag etl ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/coe-ecr-stats:etl-${{github.event.pull_request.head.sha || github.sha}}
 
       - name: Docker Push ETL
-        run: docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets/AWS_REGION}}.amazonaws.com/coe-ecr-stats:etl-${{github.event.pull_request.head.sha || github.sha}}
+        run: docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/coe-ecr-stats:etl-${{github.event.pull_request.head.sha || github.sha}}
