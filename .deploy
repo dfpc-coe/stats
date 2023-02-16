@@ -1,6 +1,7 @@
 {
     "name": "coe-stats",
     "profile": "coegc",
+    "region": "us-gov-east-1",
     "tags": [
         {
             "Key": "Project",
