@@ -1,10 +1,10 @@
 {
     "name": "coe-stats",
-    "profile": "coe",
+    "profile": "coegc",
     "tags": [
         {
             "Key": "Project",
-            "Value": "etl"
+            "Value": "stats"
         },
         "Owner"
     ],
