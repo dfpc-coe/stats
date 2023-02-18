@@ -1,4 +1,4 @@
-import cf from '@mapbox/cloudfriend';
+import cf from '@openaddresses/cloudfriend';
 
 export default {
     Resources: {
@@ -12,9 +12,7 @@ export default {
                     Id: cf.stackName,
                     Statement: [{
                         Effect: 'Allow',
-                        Principal: {
-                            AWS: cf.join(['arn:aws:iam::', cf.accountId, ':root'])
-                        },
+                        Principal: { AWS: cf.accountId },
                         Action: ['kms:*'],
                         Resource: '*'
                     }]

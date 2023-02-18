@@ -1,4 +1,4 @@
-import cf from '@mapbox/cloudfriend';
+import cf from '@openaddresses/cloudfriend';
 
 export default {
     Resources: {
@@ -71,7 +71,7 @@ export default {
                 Path: '/',
                 Policies: [],
                 ManagedPolicyArns: [
-                    'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+                    cf.join(['arn:', cf.partition, ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'])
                 ]
             }
         }

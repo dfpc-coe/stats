@@ -1,4 +1,4 @@
-import cf from '@mapbox/cloudfriend';
+import cf from '@openaddresses/cloudfriend';
 import API from './lib/api.js';
 import DB from './lib/db.js';
 import KMS from './lib/kms.js';
@@ -62,7 +62,7 @@ export default cf.merge(
                 Type: 'String'
             },
             SubnetPrivateB: {
-                Description: 'VPC SubnetPrivateB to deploy into',
+                Description: 'VPC SubnetPrivateA to deploy into',
                 Type: 'String'
             }
         }

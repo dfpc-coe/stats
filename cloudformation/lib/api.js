@@ -1,4 +1,4 @@
-import cf from '@mapbox/cloudfriend';
+import cf from '@openaddresses/cloudfriend';
 
 export default {
     Resources: {
@@ -93,8 +93,8 @@ export default {
                         Statement: [{
                             Effect: 'Allow',
                             Resource: [
-                                cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3')]),
-                                cf.join(['arn:aws:s3:::', cf.ref('TileBaseS3'), '/*'])
+                                cf.join(['arn:', cf.partition, ':s3:::', cf.ref('TileBaseS3')]),
+                                cf.join(['arn:', cf.partition, ':s3:::', cf.ref('TileBaseS3'), '/*'])
                             ],
                             Action: ['s3:Get*', 's3:List*']
 
@@ -127,14 +127,12 @@ export default {
                                 'logs:PutLogEvents',
                                 'logs:DescribeLogStreams'
                             ],
-                            Resource: ['arn:aws:logs:*:*:*']
+                            Resource: [cf.join(['arn:', cf.partition, ':logs:*:*:*'])]
                         }]
                     }
                 }],
                 ManagedPolicyArns: [
-                    'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy',
-                    'arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role',
-                    'arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly'
+                    cf.join(['arn:', cf.partition, ':iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'])
                 ],
                 Path: '/service-role/'
             }
